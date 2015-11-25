@@ -33,7 +33,9 @@
         </select>
         <br />
         <label>Platform: </label>
-        <input value.bind="report.platform" name="platform" type="text" />
+        <div id="platform">
+            <input class="platform" id="inputfield0" onkeypress="if (event.keyCode == 13) { addPlatform(); return false; }" onkeyup="checkDouble()" name="platform" type="text" />
+        </div>
 
         <br /><br />
 

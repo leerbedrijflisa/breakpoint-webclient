@@ -57,3 +57,7 @@ th, td {
 select#selectperson {
    margin: 24px 0px 5px 0px;
 }
+
+.platformdouble {
+    color: red;
+}

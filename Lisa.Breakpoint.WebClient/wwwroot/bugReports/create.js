@@ -35,7 +35,17 @@ export class Create {
         };
     }
 
+    getPlatforms() {
+        var platform = new Array();
+        var platformElement = document.getElementsByClassName("platform");
+        for (var i = 0; i < platformElement.length; i++) {
+            platform.push(platformElement[i].value);
+        }
+        return platform;
+    }
+
     submit() {
+        this.report.platform = this.getPlatforms();
         this.report.assignedTo.type = getAssignedToType(document.getElementById("assignedTo"));;
         this.data.postReport(this.report).then(response => {
             this.router.navigateToRoute("reports", { organization: this.report.organization, project: this.report.project });
