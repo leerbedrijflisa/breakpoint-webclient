@@ -9,10 +9,6 @@ export class ReportData {
         this.http = http;
     }
 
-    getSingleReport(params){
-        return this.http.get("reports/"+params.id);
-    }
-
     // Send the Params and the user
     getAllReports(params, user){
         return this.http.get("reports/"+params.organization+"/"+params.project+"/"+readCookie("userName"));
@@ -40,6 +36,10 @@ export class ReportData {
     // Send the Id and the changed report
     patchReport(id, data) {
         return this.http.patch('reports/' + id + "/" + readCookie("userName"), data);
+    }
+
+    getPlatforms() {
+        return this.http.get('platforms');
     }
 
 }
