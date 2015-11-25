@@ -1,0 +1,110 @@
+﻿<template>
+    <link rel="stylesheet" href="css/Dashboard.css" />
+    <h2>List of reports (${reportsCount}): </h2>
+    <div class="filters">
+        <div class="sep">
+            <label for="titleFilter" class="flabel">Title: </label>
+            <input change.delegate="filterReports()" type="text" id="titleFilter" name="titleFilter" class="filterItem smaller" />
+        </div>
+
+        <!--<div class="sep">
+            <label for="reportedFilter" class="flabel">Reported: </label>
+            <input type="date" name="reportedFilter" value="${dateNow}" />
+        </div>-->
+
+        <!--<div class="sep">
+            <label for="priorityFilter" class="flabel">Priority: </label>
+            <select change.delegate="filterReports()" id="priorityFilter" name="priorityFilter" class="filterItem">
+                <option value="all" selected="selected">All priorities</option>
+                <option disabled>──────────</option>
+                <option value="0">Fix immediately</option>
+                <option value="1">Fix before release</option>
+                <option value="2">Fix for next release</option>
+                <option value="3">Fix whenever</option>
+            </select>
+        </div>-->
+
+        <div class="sep">
+            <label for="statusFilter" class="flabel">Status: </label>
+            <select change.delegate="filterReports()" id="statusFilter" name="statusFilter" class="filterItem">
+                <option value="all" selected="selected">All statuses</option>
+                <option disabled>──────────</option>
+                <option value="Open">Open</option>
+                <option value="Fixed">Fixed</option>
+                <option value="Won't Fix">Won't Fix</option>
+                <option value="Won't Fix (Approved)">Won't Fix (Approved)</option>
+                <option value="Closed">Closed</option>
+            </select>
+        </div>
+
+        <div class="sep">
+            <label for="reporterFilter" class="flabel">Reporter: </label>
+            <select change.delegate="filterReports()" id="reporterFilter" name="reporterFilter" class="filterItem">
+                <option value="all">All reporters</option>
+                <option disabled>──────────</option>
+                <option repeat.for="member of members" value="${member.userName}">${member.userName}</option>
+            </select>
+        </div>
+
+        <div class="sep">
+            <label for="memberFilter" class="flabel">Member: </label>
+            <select change.delegate="filterReports()" id="memberFilter" name="memberFilter" class="filterItem" value.bind="loggedUser">
+                <option value="all">All members</option>
+                <option value="none">No members</option>
+                <option disabled>──────────</option>
+                <option repeat.for="member of members" value="${member.userName}">${member.userName}</option>
+            </select>
+        </div>
+
+        <div class="sep">
+            <label for="groupFilter" class="flabel">Group: </label>
+            <select change.delegate="filterReports()" id="groupFilter" name="groupFilter" class="filterItem" value.bind="loggedUserRole">
+                <option value="all">All groups</option>
+                <option value="none">No groups</option>
+                <option disabled>──────────</option>
+                <option repeat.for="group of groups" value="${group.name}">${group.name}</option>
+            </select>
+        </div>
+
+        <div class="sep">
+            <label for="versionFilter" class="flabel">Version: </label>
+            <select change.delegate="filterReports()" id="versionFilter" name="versionFilter" class="filterItem">
+                <option value="all">All versions</option>
+                <option value="none">No versions</option>
+                <option disabled>──────────</option>
+                <option repeat.for="version of versions" value="${version}">${version}</option>
+            </select>
+        </div>
+    </div>
+    <a route-href="route: create-report; params.bind: { organization: params.organization, project: params.project }">Create report</a>
+    <br />
+    <ul>
+        <li repeat.for="report of reports" class="li-item report-item">
+            <h3>
+                <a route-href="route: edit-report; params.bind: { organization: $parent.params.organization, project: $parent.params.project, id: report.number }">
+                    Report ${report.number} - ${report.title}
+                </a>
+            </h3>
+            <p><span class="label">stepByStep:</span> ${report.stepByStep}</p>
+            <p><span class="label">expectation:</span> ${report.expectation}</p>
+            <p><span class="label">whatHappened:</span> ${report.whatHappened}</p>
+            <p><span class="label">reporter:</span> ${report.reporter}</p>
+            <p><span class="label">reported:</span> ${report.reported}</p>
+            <p><span class="label">version:</span> ${report.version}</p>
+            <form submit.delegate="$parent.patchStatus(report.number, $index)">
+                   <span class="label">status:</span>
+                    <select value.bind="report.status" name="status" id="status${report.number}">
+                        <option value="Open">Open</option>
+                        <option value="Fixed">Fixed</option>
+                        <option value="Won't Fix">Won't Fix</option>
+                        <option value="Won't Fix (Approved)" disabled="${$parent.wontfixDisabled}">Won't Fix (Approved)</option>
+                        <option value="Closed" disabled="${report.closedDisabled}">Closed</option>
+                    </select>
+                    <button type="submit">Edit Status</button>
+            </form>
+            <p><span class="label">priority:</span> ${report.priorityString}</p>
+            <p if.bind="$parent.showAssignedTo[$index]"><span>assigned to a </span> <span class="label">${report.assignedTo.type}</span>: ${report.assignedTo.value}</p>
+            <p><span class="label">Platform:</span> ${report.platform} </p>
+        </li>
+    </ul>
+</template>
