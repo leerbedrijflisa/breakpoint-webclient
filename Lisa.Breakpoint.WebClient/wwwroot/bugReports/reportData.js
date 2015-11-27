@@ -9,6 +9,7 @@ export class ReportData {
         this.http = http;
     }
 
+    // Send the Params
     getSingleReport(params){
         return this.http.get("reports/"+params.id);
     }
