@@ -13,7 +13,6 @@ export class dashboard {
 
     activate(params) {
         this.params = params;
-        this.closedDisabled = null;
         this.wontfixDisabled = true;
         this.showAssignedTo = [];
         this.loggedUser = readCookie("userName");
@@ -55,6 +54,7 @@ export class dashboard {
     showAssigned(reports) {
         var reportsLength = count(reports);
         var i;
+
         for (i = 0; i < reportsLength; i++) {
             if (reports[i].assignedTo.type == "") {
                 this.showAssignedTo[i] = false;
@@ -68,8 +68,8 @@ export class dashboard {
     getTestVersions(reports) {
         var reportsLength = count(reports);
         var versions = [];
-
         var i;
+
         for (i = 0; i < reportsLength; i++) {
             if (reports[i].version != "") {
                 versions.push(reports[i].version);
@@ -101,7 +101,6 @@ export class dashboard {
                 value += getSelectValue(filterType)+"&";
             }
         }
-
         filter = filter.slice(0, -1);
         value  = value.slice(0, -1);
 
@@ -115,6 +114,7 @@ export class dashboard {
         if (this.reports[index].status == null) {
             this.reports[index].status = document.getElementById("status"+id).options[0].value; 
         };
+
         switch (this.reports[index].status) {
             case "Fixed":
                 var data = {

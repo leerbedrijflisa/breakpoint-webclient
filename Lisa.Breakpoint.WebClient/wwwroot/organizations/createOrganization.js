@@ -1,31 +1,31 @@
-﻿import {inject} from 'aurelia-framework';
-import {Router} from 'aurelia-router';
-import {HttpClient} from 'aurelia-http-client';
+﻿import {Router} from 'aurelia-router';
+import {OrganizationData} from './organizationData';
 
 export class Create {
     static inject() {
-        return [ Router, HttpClient ];
+        return [ Router, OrganizationData];
     }
 
-    constructor(router, http) {
+    constructor(router, data) {
         this.router = router;
-        this.http = http;
+        this.data = data;
     }
 
     activate() {
-        return this.http.get('users').then(response => {
+        //Gets the users from the Api
+        this.data.getUsers().then(response => {
             this.users = response.content;
         });
     }
     
     submit() {
-        var data = {
+        var newOrganization = {
             name: this.name,
             slug: toSlug(this.name),
-            members: getSelectValues(document.getElementById("membersSelect"))
+            members: this.members
         };
 
-        this.http.post('organizations', data).then(response => {
+        this.data.postOrganisation(newOrganization).then(response => {
             this.router.navigateToRoute("organizations");
         });
     }
