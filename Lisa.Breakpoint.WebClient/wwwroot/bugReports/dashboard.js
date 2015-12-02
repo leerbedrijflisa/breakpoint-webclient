@@ -16,6 +16,7 @@ export class dashboard {
         this.wontfixDisabled = true;
         this.showAssignedTo = [];
         this.loggedUser = readCookie("userName");
+        this.currentVersion = "The latest version";
         var thiss = this;
 
         return Promise.all([
@@ -48,6 +49,7 @@ export class dashboard {
             this.data.getProject(params, this.loggedUser).then(response => {
                 this.members = response.content.members;
                 this.groups = response.content.groups;
+                this.projectName = response.content.name;
             })
         ]);
     }

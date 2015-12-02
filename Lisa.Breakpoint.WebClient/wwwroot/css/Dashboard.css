@@ -46,3 +46,10 @@ ul:not(.menu) {
 .filters .filterItem.smaller {
     width: 146px;
 }
+
+#currentVersion {
+    float: right;
+}
+#listHeader {
+    display: inline-table;
+}
