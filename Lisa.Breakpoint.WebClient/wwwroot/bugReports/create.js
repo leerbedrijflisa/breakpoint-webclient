@@ -27,7 +27,7 @@ export class Create {
             status: "Open",
             priority: 0,
             platform: "",
-            version: "",
+            version: "The latest version",
             assignedTo: {
                 type: "",
                 value: ""
