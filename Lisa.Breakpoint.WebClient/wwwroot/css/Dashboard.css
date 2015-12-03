@@ -1,10 +1,10 @@
 ﻿p {
-    margin: 0px;
+    margin: 0;
 }
 
 ul:not(.menu) {
     list-style: none;
-    margin: 0px;
+    margin: 0;
 }
 
 .li-item {
@@ -46,10 +46,10 @@ ul:not(.menu) {
 .filters .filterItem.smaller {
     width: 146px;
 }
+#listHeader {
+    display: inline-table;
+}
 
 #currentVersion {
     float: right;
-}
-#listHeader {
-    display: inline-table;
 }
