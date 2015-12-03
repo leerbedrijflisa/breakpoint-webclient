@@ -9,6 +9,12 @@ export class ReportData {
         this.http = http;
     }
 
+    getTestVersion() {
+        return new Promise (function(resolve, reject) {
+            resolve({ content : "The latest version" });
+        });
+    }
+
     // Send the Params
     getSingleReport(params){
         return this.http.get("reports/"+params.id);

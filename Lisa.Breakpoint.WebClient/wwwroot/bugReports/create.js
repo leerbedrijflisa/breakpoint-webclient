@@ -15,7 +15,10 @@ export class Create {
         this.data.getProject(params, readCookie("userName")).then(response => {
             this.projMembers = response.content.members;
             this.groups = response.content.groups;
-        });
+        }),
+        this.data.getTestVersion().then(response => {
+                this.report.version = response.content;
+        })
         this.report = {
             title: "",
             project: params.project,
@@ -27,7 +30,7 @@ export class Create {
             status: "Open",
             priority: 0,
             platform: "",
-            version: "The latest version",
+            version: "",
             assignedTo: {
                 type: "",
                 value: ""
