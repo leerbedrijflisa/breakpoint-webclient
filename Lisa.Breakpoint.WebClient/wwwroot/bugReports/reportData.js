@@ -9,12 +9,16 @@ export class ReportData {
         this.http = http;
     }
 
+    // These are the fake web API parts, this will be changed into real links overtime
     getTestVersion() {
         return new Promise (function(resolve, reject) {
             resolve({ content : "The latest version" });
         });
     }
 
+
+    // these are the real web API links
+    // instructions are provided below :
     // Send the Params
     getSingleReport(params){
         return this.http.get("reports/"+params.id);
