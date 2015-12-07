@@ -17,6 +17,11 @@ export class ReportData {
     }
 
 
+    getAllVersions() {
+        return new Promise (function(resolve, reject) {
+            resolve({ content : [ "the latest version", "a different version", "Legacy" ] });
+        });
+    }
     // these are the real web API links
     // instructions are provided below :
     // Send the Params

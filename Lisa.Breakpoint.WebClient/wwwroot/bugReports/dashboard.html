@@ -1,16 +1,25 @@
 ﻿<template>
     <link rel="stylesheet" href="css/Dashboard.css" />
     <h2 id="listHeader">List of reports (${reportsCount}): </h2>
-    <h2 id="currentVersion"> The current version is : ${currentVersion} </h2>
+    <section class="projectSpecs">
+        <h2> about this project:</h2>
+        <p>${params.organization}</p>
+        <p>${params.project}</p>
+        <p id="currentVersion"> The current version is : ${currentVersion} </p>
+        <form onsubmit="FormSubmit(this);">
+            <input type="hidden" name="version" />
+            <select name="version_ddl" onchange="DropDownChanged(this);" style="margin-right: 172px;">
+                <option repeat.for="version of allVersions" value.bind="version"> ${version}</option>
+                <option value="">Add an option</option>
+            </select>
+            <input type="text" name="version_txt" style="display: none;" />
+            <button type="submit">Submit</button>
+        </form>
+    </section>
     <div class="filters">
         <div class="sep">
             <label for="titleFilter" class="flabel">Title: </label>
             <input change.delegate="filterReports()" type="text" id="titleFilter" name="titleFilter" class="filterItem smaller" />
-        </div>
-
-        <div class="sep">
-            <label for="reportedFilter" class="flabel">Reported: </label>
-            <input type="text" id="reportedFilter" name="reportedFilter" class="filterItem" />
         </div>
 
         <div class="sep">

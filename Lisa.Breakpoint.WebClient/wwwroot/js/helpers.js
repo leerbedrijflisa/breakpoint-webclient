@@ -139,3 +139,21 @@ function checkDouble() {
         }
     }
 }
+
+function DropDownChanged(oDDL) {
+    var oTextbox = oDDL.form.elements["version_txt"];
+    if (oTextbox) {
+        oTextbox.style.display = (oDDL.value == "") ? "" : "none";
+        if (oDDL.value == "")
+            oDDL.form.elements["version_ddl"].style.marginRight = "0px";
+            oTextbox.focus();
+    }
+}
+
+function FormSubmit(oForm) {
+    var oHidden = oForm.elements["version"];
+    var oDDL = oForm.elements["version_ddl"];
+    var oTextbox = oForm.elements["version_txt"];
+    if (oHidden && oDDL && oTextbox)
+        oHidden.value = (oDDL.value == "") ? oTextbox.value : oDDL.value;
+}

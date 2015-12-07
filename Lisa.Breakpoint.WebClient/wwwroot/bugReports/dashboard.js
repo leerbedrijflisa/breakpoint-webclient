@@ -22,6 +22,9 @@ export class dashboard {
             this.data.getTestVersion().then(response => {
                 this.currentVersion = response.content;
             }),
+            this.data.getAllVersions().then(response => {
+                this.allVersions = response.content;
+            }),
             this.data.getGroupFromUser(params, this.loggedUser).then(response => {
                 this.loggedUserRole = response.content;
                 if (this.loggedUserRole == "manager") {
