@@ -22,6 +22,7 @@ export class ReportData {
             resolve({ content : [ "the latest version", "a different version", "Legacy" ] });
         });
     }
+
     // these are the real web API links
     // instructions are provided below :
     // Send the Params
@@ -36,7 +37,7 @@ export class ReportData {
 
     // Send the Params, filter and the user
     getFilteredReports(params, user, filter, value){
-        return this.http.get("reports/"+params.organization+"/"+params.project+"/"+readCookie("userName")+"/"+filter+"/"+value)
+        return this.http.get("reports/"+params.organization+"/"+params.project+"/"+readCookie("userName")+"/"+filter+"/"+value);
     }
 
     // Send the Params and the user
