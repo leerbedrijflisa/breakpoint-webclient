@@ -144,6 +144,7 @@ function DropDownChanged(oDDL) {
     var oTextbox = oDDL.form.elements["version_txt"];
     if (oTextbox) {
         oTextbox.style.display = (oDDL.value == "") ? "" : "none";
+        oDDL.form.elements["version_ddl"].style.marginRight = "179px";
         if (oDDL.value == "")
             oDDL.form.elements["version_ddl"].style.marginRight = "0px";
             oTextbox.focus();
