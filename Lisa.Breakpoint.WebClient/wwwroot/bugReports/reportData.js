@@ -12,14 +12,24 @@ export class ReportData {
     // These are the fake web API parts, this will be changed into real links overtime
     getTestVersion() {
         return new Promise (function(resolve, reject) {
-            resolve({ content : "The latest version" });
+            var version = localStorage.getItem("currentVersion");
+            if(version == null) {
+                version =   "The latest version";
+                localStorage.setItem("currentVersion", "The latest version");
+            }
+            resolve({ content : version });
         });
     }
 
 
     getAllVersions() {
         return new Promise (function(resolve, reject) {
-            resolve({ content : [ "the latest version", "a different version", "Legacy" ] });
+            var versions = JSON.parse(localStorage.getItem("allVersions"));
+            if(versions == null) {
+                versions =  [ "The latest version", "a different version", "Legacy" ];
+                localStorage.setItem("allVersions", JSON.stringify(versions));
+            }
+            resolve({ content : versions });
         });
     }
 

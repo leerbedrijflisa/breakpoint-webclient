@@ -88,6 +88,19 @@ export class dashboard {
         })
     }
 
+    changeVersion() {
+        //Check if exists
+        if (this.versionTextbox) {
+            //if the value is 0 the display will be "" and the texbox will appear, otherwise it will stay hidden
+            this.versionTextbox.style.display = (this.currentVersion == "") ? "" : "none";
+            this.versionTextbox.style.marginRight = "179px";
+            if (this.currentVersion == "") {
+                this.versionTextbox.style.marginRight = "0px";
+                this.versionTextbox.focus();
+            }
+        }
+    }
+
     filterReports() {
         var filters = document.getElementsByClassName('filterItem');
         var filter = "";
@@ -115,6 +128,18 @@ export class dashboard {
             this.reports = response.content;
             this.reportsCount = count(this.reports);
         });
+    }
+
+    patchVersion() {
+
+            var existingVersions = JSON.parse(localStorage.getItem("allVersions"));
+            if(existingVersions == null) existingVersions = [ "The latest version", "a different version", "Legacy" ];
+
+            // Save allVersions and currentVersion back to local storage
+            existingVersions.push(this.currentVersion);
+            localStorage.setItem("allVersions", JSON.stringify(existingVersions));
+            localStorage.setItem("currentVersion", this.currentVersion);
+
     }
 
     patchStatus(id, index) {

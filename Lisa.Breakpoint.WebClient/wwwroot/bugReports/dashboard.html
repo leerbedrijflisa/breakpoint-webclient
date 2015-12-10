@@ -2,17 +2,14 @@
     <link rel="stylesheet" href="css/Dashboard.css" />
     <h2 id="listHeader">List of reports (${reportsCount}): </h2>
     <section class="projectSpecs">
-        <h2> about this project:</h2>
-        <p>${params.organization}</p>
-        <p>${params.project}</p>
-        <p id="currentVersion"> The current version is : ${currentVersion} </p>
-        <form onsubmit="FormSubmit(this);">
+        <h2 id="currentVersion"> The current version is : ${currentVersion} </h2>
+        <form submit.delegate="patchVersion()" ref="versionForm">
             <input type="hidden" name="version" />
-            <select name="version_ddl" onchange="DropDownChanged(this);" style="margin-right: 179px;">
+            <select class="versionDropDown" value.bind="currentVersion" change.delegate="changeVersion()">
                 <option repeat.for="version of allVersions" value.bind="version"> ${version}</option>
                 <option value="">Add an option</option>
             </select>
-            <input type="text" name="version_txt" style="display: none;" />
+            <input type="text" value.bind="currentVersion" ref="versionTextbox" style="display: none;" />
             <button type="submit">Submit</button>
         </form>
     </section>
