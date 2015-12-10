@@ -89,7 +89,6 @@ export class dashboard {
     }
 
     changeVersion() {
-        //Check if exists
         if (this.versionTextbox) {
             //if the value is 0 the display will be "" and the texbox will appear, otherwise it will stay hidden
             this.versionTextbox.style.display = (this.currentVersion == "") ? "" : "none";
@@ -131,15 +130,26 @@ export class dashboard {
     }
 
     patchVersion() {
-
             var existingVersions = JSON.parse(localStorage.getItem("allVersions"));
             if(existingVersions == null) existingVersions = [ "The latest version", "a different version", "Legacy" ];
-
-            // Save allVersions and currentVersion back to local storage
-            existingVersions.push(this.currentVersion);
-            localStorage.setItem("allVersions", JSON.stringify(existingVersions));
-            localStorage.setItem("currentVersion", this.currentVersion);
-
+            if(this.textVersion)
+            {
+                if(existingVersions.indexOf(this.textVersion)) {
+                    // Save allVersions and currentVersion back to local storage
+                    existingVersions.push(this.textVersion);
+                    localStorage.setItem("allVersions", JSON.stringify(existingVersions));
+                    localStorage.setItem("currentVersion", this.textVersion);
+                    window.location.reload();
+                }
+                else {
+                    localStorage.setItem("currentVersion", this.textVersion);
+                    window.location.reload();
+                }
+            }
+            else {
+                localStorage.setItem("currentVersion", this.currentVersion);
+                window.location.reload();
+            }
     }
 
     patchStatus(id, index) {
