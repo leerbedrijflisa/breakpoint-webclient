@@ -1,6 +1,7 @@
 ﻿<template>
     <link rel="stylesheet" href="css/Dashboard.css" />
     <h2>List of reports (${reportsCount}): </h2>
+    <a route-href="route: changelog; params.bind: { organization: params.organization, project: params.project }">Changelog</a>
     <div class="filters">
         <div class="sep">
             <label for="titleFilter" class="flabel">Title: </label>
