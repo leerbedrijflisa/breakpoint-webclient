@@ -12,6 +12,9 @@ export class App {
         http.configure(x => {
             x.withBaseUrl('http://localhost:10791/');
             x.withHeader('Content-Type', 'application/json');
+            if (localStorage.getItem("Token")) {
+                x.withHeader('Authorization', 'bearer ' + localStorage.getItem("Token"));
+            }
         });
     }
 

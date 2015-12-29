@@ -34,17 +34,19 @@ export class user {
         if (!readCookie("userName")) {
             if (from == "afterRegister") {
                 var data = {
-                    userNameLogin: this.userNameRegister
+                    userName: this.userNameRegister
                 }
             } else {
                 var data = {
-                    userNameLogin: this.userNameLogin
+                    userName: this.userNameLogin
                 }
             }
 
-            this.http.get('users/login/'+data.userNameLogin).then( response => {
+            this.http.post('token', data).then( response => {
                 if (response.content != null) {
-                    setCookie("userName", response.content.username, 2);
+                    //setCookie("userName", response.content.userName, 2);
+                    localStorage.setItem("user", response.content.user);
+                    localStorage.setItem("token", response.content.token);
                     document.getElementById("user_userName").innerHTML = "Logged in as: " + readCookie("userName");
                     this.router.navigateToRoute("organizations");
                 }
