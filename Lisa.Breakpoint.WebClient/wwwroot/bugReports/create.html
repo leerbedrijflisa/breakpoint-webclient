@@ -1,6 +1,6 @@
 ﻿<template>
     <h3>Report a bug:</h3>
-    <form submit.delegate="submit()">
+    <form  ref="createForm">
         <label for="title">Title: </label>
         <input value.bind="report.title" name="title" type="text" />
         <br />
@@ -34,7 +34,7 @@
         <br />
         <label>Platform: </label>
         <div id="platform">
-            <input class="platform" id="inputfield0" onkeypress="if (event.keyCode == 13) { addPlatform(); return false; }" onkeyup="checkDouble()" name="platform" type="text" />
+            <input keyup.trigger="checkKey($event)" type="text" />
         </div>
 
         <br /><br />
@@ -43,6 +43,6 @@
         <input type="text" value.bind="report.version"/>
 
         <br />
-        <button type="submit" name="submit">Report bug</button>
+        <a click.delegate="submit()" href="" class="btn" name="submit">Report bug</a>
     </form>
 </template>

@@ -38,6 +38,23 @@ export class Create {
         };
     }
 
+    checkKey(event) {
+        if(event.which == 13) {
+            this.addInput(this.value);
+        }
+        return false;
+    }
+
+    addInput(input) {
+        if(this.input == "") {
+            alert("You didn't put anything down"); 
+            return false;
+        }
+        alert("You tried to add an input"); 
+        this.value = this.input;
+        return false;
+    }
+
     getPlatforms() {
         var platform = new Array();
         var platformElement = document.getElementsByClassName("platform");
