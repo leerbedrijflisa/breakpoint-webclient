@@ -33,12 +33,9 @@
         </select>
         <br />
         <label>Platform: </label>
-        <div id="platform">
-            <input keyup.trigger="checkKey($event)" type="text" />
-        </div>
-
-        <br /><br />
-
+        <input value.bind="platform" keyup.trigger="$parent.checkKey($index, $event)" type="text" />
+        <a click.delegate="$parent.removeInput($index)" ref="deletebtn" href="" class="btn" name="submit">X</a>
+        <br />
         <label for="version">Test version: </label>
         <input type="text" value.bind="report.version"/>
 
