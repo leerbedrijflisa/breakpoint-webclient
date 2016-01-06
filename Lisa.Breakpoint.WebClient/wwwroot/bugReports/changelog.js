@@ -19,20 +19,24 @@ export class changelog {
             this.data.getChangelog(params).then(response => {
                 this.bugreports = response.content;
 
-                console.log(this.bugreports)
+                //console.log(this.bugreports)
 
-               // console.log(this.bugreports.version)
+                // console.log(this.bugreports.version)
 
                 var i = 0
 
 
-                this.bugreports.forEach(function(report){
-                    console.log(i + " " + report.version)
-                    
+                this.bugreports.forEach(function(versions){
+                    console.log(i + " " + versions.version)
 
-                    console.log(report.reports)
+                    //this.version = 
 
-                    console.log(report.reports.title)
+                    versions.reports.forEach(function(report){
+                        console.log(report.title)
+                        console.log(report.whathappened)
+
+                    })
+
 
                     i++
                 })
