@@ -14,7 +14,7 @@ export class dashboard {
     activate(params) {
         this.params = params;
         this.wontfixDisabled = true;
-        this.showAssignedTo = [];
+        this.showAssignedTo = [];   
         this.loggedUser = readCookie("userName");
         var thiss = this;
 
@@ -26,9 +26,13 @@ export class dashboard {
                 this.allVersions = response.content;
             }),
             this.data.getGroupFromUser(params, this.loggedUser).then(response => {
+                this.canAddOption = false;
                 this.loggedUserRole = response.content;
                 if (this.loggedUserRole == "manager") {
                     this.wontfixDisabled = null;
+                }
+                if (this.loggedUserRole === "manager" || this.loggedUserRole ===  "developer" ) {
+                    this.canAddOption = true;
                 }
                 this.firstFilter = "member&group";
                 this.firstValues = this.loggedUser+"&"+this.loggedUserRole;

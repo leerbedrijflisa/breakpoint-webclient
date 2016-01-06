@@ -3,7 +3,7 @@
     <h2 id="listHeader">List of reports (${reportsCount}): </h2>
     <section class="projectSpecs">
         <h2 id="currentVersion"> The current version is : ${currentVersion} </h2>
-        <form submit.delegate="patchVersion()" ref="versionForm">
+        <form if.bind="canAddOption" submit.delegate="patchVersion()" ref="versionForm">
             <input type="hidden" name="version" />
             <select class="versionDropDown" value.bind="currentVersion" change.delegate="changeVersion()">
                 <option repeat.for="version of allVersions" value.bind="version"> ${version}</option>
