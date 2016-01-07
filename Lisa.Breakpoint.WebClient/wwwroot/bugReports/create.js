@@ -67,6 +67,9 @@ export class Create {
         if (this.oldPlatforms === null) {
             this.oldPlatforms = [];
         }
+        if (this.platforms.length == 1 || this.platforms[0] == "")   {
+            this.platforms[0] = "not specified";
+        }
         var difference = this.oldPlatforms
             .filter(x => this.platforms.indexOf(x) == -1)
             .concat(this.platforms.filter(x => this.oldPlatforms.indexOf(x) == -1));
