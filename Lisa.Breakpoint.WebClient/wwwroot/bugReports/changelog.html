@@ -6,15 +6,13 @@
     <ul repeat.for="versions of bugreports">
         <li>${versions.version}</li>
         <ul repeat.for="report of versions.reports">
-            <li>${report.title}</li>
-            <li>${report.whathappened}</li>
+            <li>Title: ${report.title}</li>
+            What happened?: ${report.whathappened}
+            <br /><br />
         </ul>
+        
     </ul>
 
-    <ul repeat.for="report of bugreports.reports">
-        <li>${report.title}</li>
-        <li>${report.whathappened}</li>
-    </ul>
     
    <!-- ${report.reports[$index].title}-->
 
