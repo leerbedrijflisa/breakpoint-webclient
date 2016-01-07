@@ -48,12 +48,12 @@ export class Create {
 
     addInput(index, event) {
         var newPlatfrom = event.target.value;
-        if(newPlatfrom === undefined || newPlatfrom === null) {
-            return false;
-        }
+        if(newPlatfrom === undefined || newPlatfrom === null) { 
+            return; 
+        };
         this.platforms[index] = newPlatfrom;
-        event.target.value = '';
         if (this.platforms[this.platforms.length-1]) {
+            event.target.value = '';
             this.platforms.push('');
         }
     }
