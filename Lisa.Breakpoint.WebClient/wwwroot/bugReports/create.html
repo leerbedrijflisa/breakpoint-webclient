@@ -32,10 +32,13 @@
             </optgroup>
         </select>
         <br />
+
         <label>Platform: </label>
-        <input value.bind="platform" keyup.trigger="$parent.checkKey($index, $event)" type="text" />
-        <a click.delegate="$parent.removeInput($index)" ref="deletebtn" href="" class="btn" name="submit">X</a>
-        <br />
+        <template repeat.for ="platform of platforms">
+            <input value.bind="platform" keyup.trigger="$parent.checkKey($index, $event)" type="text" />
+            <a click.delegate="$parent.removeInput($index)" href="" if.bind="$parent.platforms.length > 1" class="btn" name="submit">X</a>
+            <br />
+        </template>
         <label for="version">Test version: </label>
         <input type="text" value.bind="report.version"/>
 
