@@ -9,8 +9,8 @@ export class Create {
     constructor(reportData, router) {
         this.data = reportData;
         this.router = router;
-        this.platforms = [];
-        this.platforms.push('');
+        this.oldPlatforms = JSON.parse(localStorage.getItem("allPlatforms"));
+        if(this.oldPlatforms == null) this.oldPlatforms = [ "IE8", "Firefox 9001", "Thor Browser" ];
     }
     
     activate(params) {
@@ -38,6 +38,7 @@ export class Create {
                 value: ""
             }
         };
+        this.report.platform.push('');
     }
 
     checkKey(index, event) {
@@ -47,33 +48,36 @@ export class Create {
     }
 
     addInput(index, event) {
-        var newPlatfrom = event.target.value;
-        if(newPlatfrom === undefined || newPlatfrom === null) { 
-            return; 
-        };
-        this.platforms[index] = newPlatfrom;
-        if (this.platforms[this.platforms.length-1]) {
+        this.report.platform[index] = event.target.value;
+        if (this.report.platform[this.report.platform.length-1]) {
             event.target.value = '';
-            this.platforms.push('');
+            this.report.platform.push('');
         }
     }
 
     removeInput(index) {
-        this.platforms.splice(index, 1);
+        this.report.platform.splice(index, 1);
     }
 
     submit() {
-        this.oldPlatforms = JSON.parse(localStorage.getItem("allPlatforms"));
+        if(!document.getElementById("input0").value == "")  {
+            this.report.platform[0] = document.getElementById("input0").value;
+        }
         if (this.oldPlatforms === null) {
             this.oldPlatforms = [];
         }
-        if (this.platforms.length == 1 || this.platforms[0] == "")   {
-            this.platforms[0] = "not specified";
+        if (this.report.platform.length == 1 && this.report.platform[0] == "")   {
+            this.report.platform[0] = "not specified";
         }
         var difference = this.oldPlatforms
-            .filter(x => this.platforms.indexOf(x) == -1)
-            .concat(this.platforms.filter(x => this.oldPlatforms.indexOf(x) == -1));
-        difference.pop();
+            .filter(x => this.report.platform.indexOf(x) == -1)
+            .concat(this.report.platform.filter(x => this.oldPlatforms.indexOf(x) == -1));
+
+        for(var i=0;i<difference.length;i++){
+            if(difference[i] === "")   {
+                difference.splice(i, 1);
+            }
+        }
 
         if (difference.length > 0) {
             localStorage.setItem("allPlatforms", JSON.stringify(difference));
