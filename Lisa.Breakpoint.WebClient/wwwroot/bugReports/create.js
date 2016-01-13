@@ -14,6 +14,7 @@ export class Create {
     }
     
     activate(params) {
+        this.params = params;
         this.data.getProject(params, readCookie("userName")).then(response => {
             this.projMembers = response.content.members;
             this.groups = response.content.groups;
@@ -50,7 +51,6 @@ export class Create {
     addInput(index, event) {
         this.report.platform[index] = event.target.value;
         if (this.report.platform[this.report.platform.length-1]) {
-            event.target.value = '';
             this.report.platform.push('');
         }
     }
@@ -59,32 +59,34 @@ export class Create {
         this.report.platform.splice(index, 1);
     }
 
-    submit() {
-        if(!document.getElementById("input0").value == "")  {
-            this.report.platform[0] = document.getElementById("input0").value;
-        }
+    submit(params) {
+        var thiss = this;
         if (this.oldPlatforms === null) {
             this.oldPlatforms = [];
         }
         if (this.report.platform.length == 1 && this.report.platform[0] == "")   {
             this.report.platform[0] = "not specified";
         }
-        var difference = this.oldPlatforms
-            .filter(x => this.report.platform.indexOf(x) == -1)
-            .concat(this.report.platform.filter(x => this.oldPlatforms.indexOf(x) == -1));
 
-        for(var i=0;i<difference.length;i++){
-            if(difference[i] === "")   {
-                difference.splice(i, 1);
+        var uniqueNewPlatforms = this.report.platform.filter(function(obj) {
+            return !thiss.oldPlatforms.some(function(obj2) {
+                return obj == obj2;
+            });
+        });
+
+        var allPlatforms = this.oldPlatforms.concat(uniqueNewPlatforms);
+        for(var i=0;i<allPlatforms.length;i++){
+            if(allPlatforms[i] === "")   {
+                allPlatforms.splice(i, 1);
             }
         }
 
-        if (difference.length > 0) {
-            localStorage.setItem("allPlatforms", JSON.stringify(difference));
+        if (allPlatforms.length > 0) {
+            localStorage.setItem("allPlatforms", JSON.stringify(allPlatforms));
         }
         this.report.assignedTo.type = getAssignedToType(document.getElementById("assignedTo"));;
         this.data.postReport(this.report).then(response => {
-            window.location.reload();
+            this.router.navigateToRoute("reports", { organization: this.params.organization, project: this.params.project });
         });
     }
 }

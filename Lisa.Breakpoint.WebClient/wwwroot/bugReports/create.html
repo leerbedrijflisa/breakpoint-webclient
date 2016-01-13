@@ -35,7 +35,7 @@
 
         <label>Platform: </label>
         <template repeat.for ="platform of report.platform">
-            <input list="platforms" name="platforms" value.bind="platform" keyup.trigger="$parent.checkKey($index, $event)" id="input${$index}">
+            <input list="platforms" name="platforms" value.bind="$parent.report.platform[$index]" keyup.trigger="$parent.checkKey($index, $event)" id="input${$index}">
             <datalist id="platforms">
                 <option repeat.for="oldPlatform of $parent.oldPlatforms" value.bind="oldPlatform">
             </datalist>
