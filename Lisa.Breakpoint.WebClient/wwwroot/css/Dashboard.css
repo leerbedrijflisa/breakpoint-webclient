@@ -22,28 +22,29 @@ ul:not(.menu) {
     font-weight: bold;
 }
 
-.filters {
+#reportFilter {
     width: 250px;
     border-radius: 5px;
     border: 1px solid #a1a1a1;
     padding: 10px;
 }
 
-.filters .sep {
+#reportFilter .sep {
     margin-bottom: 5px;
 }
 
-.filters .flabel {
-    font-size: 10pt;
-    font-weight: bold;
+#reportFilter label {
+    display: inline-block;
+    width: 40px;
+    text-align: right;
 }
 
-.filters .filterItem {
+#reportFilter .filterItem {
     width: 150px;
     float: right;
 }
 
-.filters .filterItem.smaller {
+#reportFilter .filterItem.smaller {
     width: 146px;
 }
 #listHeader {

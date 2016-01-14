@@ -106,12 +106,41 @@ export class dashboard {
 
     filterReports() {
         var filters = document.getElementsByClassName('filterItem');
+        var statusFilterArray = [];
         var filter = "";
         var value = "";
+        var statusArray = [];
+        var filterArray = {};
+
+        console.log(Open)
+
+        var statusFilter = document.getElementsByClassName('statusFilter');
+
+        for (var i = 0; i < statusFilter.length; i++) {
+
+            if (statusFilter[i].checked == true) {
+                statusArray.push(statusFilter[i].value);
+                statusFilterArray.value = statusArray;
+                statusFilterArray.id = 'statusFilter';
+            }
+        }
+
+        for (var i = filters.length - 1; i >= 0; i--) {
+            filterArray[filters[i].id] = filters[i].value;
+        }
+
+        filterArray["statusFilter"] = statusFilterArray.value;
+
+        console.log(filterArray.size);
+
+
 
         for (var i = filters.length - 1; i >= 0; i--)
         {
             var filterType = filters[i].id;
+
+            console.log(filterType)
+
             if (filterType == "titleFilter") {
                 if (filters[i].value == "") {
                     continue;
@@ -123,9 +152,13 @@ export class dashboard {
                 filter += filters[i].id+"&";
                 value += getSelectValue(filterType)+"&";
             }
+
         }
+
         filter = filter.slice(0, -1);
         value  = value.slice(0, -1);
+
+        console.log(filter);
 
         return this.data.getFilteredReports(this.params, readCookie("userName"), filter, value).then(response => {
             this.reports = response.content;
