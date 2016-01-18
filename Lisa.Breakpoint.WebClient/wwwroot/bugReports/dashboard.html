@@ -4,12 +4,10 @@
     <section class="projectSpecs">
         <h2 id="currentVersion"> The current version is : ${currentVersion} </h2>
         <form if.bind="canAddOption" submit.delegate="patchVersion()" ref="versionForm">
-            <input type="hidden" name="version" />
-            <select class="versionDropDown" value.bind="currentVersion" change.delegate="changeVersion()">
-                <option repeat.for="version of allVersions" value.bind="version"> ${version}</option>
-                <option value="">Add an option</option>
-            </select>
-            <input type="text" value.bind="textVersion" ref="versionTextbox" style="display: none;" />
+            <input list="versions" name="versions" value.bind="textVersion" id="input${$index}">
+            <datalist id="versions">
+                <option repeat.for="existingVersion of existingVersions" value.bind="existingVersion">
+            </datalist>
             <button type="submit">Submit</button>
         </form>
     </section>
@@ -99,7 +97,9 @@
             </form>
             <p><span class="label">priority:</span> ${report.priorityString}</p>
             <p if.bind="$parent.showAssignedTo[$index]"><span>assigned to a </span> <span class="label">${report.assignedTo.type}</span>: ${report.assignedTo.value}</p>
-            <p><span class="label">Platform:</span> ${report.platform} </p>
+            <template  repeat.for="platform in $parent.report.platform">
+                <p><span class="label">Platform:</span> ${platform} </p>
+            </template>
         </li>
     </ul>
 </template>

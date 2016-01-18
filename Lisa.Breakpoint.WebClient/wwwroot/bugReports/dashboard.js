@@ -9,6 +9,7 @@ export class dashboard {
     constructor(reportData, router) {
         this.data = reportData;
         this.router = router;
+        this.existingVersions = JSON.parse(localStorage.getItem("allVersions"));
     }
 
     activate(params) {
@@ -92,18 +93,6 @@ export class dashboard {
         })
     }
 
-    changeVersion() {
-        if (this.versionTextbox) {
-            //if the value is 0 the display will be "" and the texbox will appear, otherwise it will stay hidden
-            this.versionTextbox.style.display = (this.currentVersion == "") ? "" : "none";
-            this.versionTextbox.style.marginRight = "179px";
-            if (this.currentVersion == "") {
-                this.versionTextbox.style.marginRight = "0px";
-                this.versionTextbox.focus();
-            }
-        }
-    }
-
     filterReports() {
         var filters = document.getElementsByClassName('filterItem');
         var filter = "";
@@ -134,27 +123,21 @@ export class dashboard {
     }
 
     patchVersion() {
-            var existingVersions = JSON.parse(localStorage.getItem("allVersions"));
-            if(existingVersions == null) existingVersions = [ "The latest version", "a different version", "Legacy" ];
+        if(this.existingVersions == null) this.existingVersions = [ "The latest version", "a different version", "Legacy" ];
             if(this.textVersion)
             {
-                if(existingVersions.indexOf(this.textVersion)) {
-                    // Save allVersions and currentVersion back to local storage
-                    existingVersions.push(this.textVersion);
-                    localStorage.setItem("allVersions", JSON.stringify(existingVersions));
+                if(this.existingVersions.indexOf(this.textVersion) > -1)    {
                     localStorage.setItem("currentVersion", this.textVersion);
                     window.location.reload();
                 }
                 else {
+                    this.existingVersions.push(this.textVersion);
+                    localStorage.setItem("allVersions", JSON.stringify(this.existingVersions));
                     localStorage.setItem("currentVersion", this.textVersion);
                     window.location.reload();
                 }
             }
-            else {
-                localStorage.setItem("currentVersion", this.currentVersion);
-                window.location.reload();
-            }
-    }
+        }
 
     patchStatus(id, index) {
         if (this.reports[index].status == null) {
