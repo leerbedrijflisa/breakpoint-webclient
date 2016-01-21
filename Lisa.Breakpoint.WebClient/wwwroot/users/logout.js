@@ -18,6 +18,7 @@ export class user {
     activate() {
         deleteCookie("userName");
         deleteCookie("role");
+        localStorage.removeItem("auth_token");
         document.getElementById("user_userName").innerHTML = "";
         this.router.navigateToRoute("login");
     }
