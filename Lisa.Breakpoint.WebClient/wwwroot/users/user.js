@@ -23,11 +23,11 @@ export class user {
                 userName: this.userNameRegister,
                 fullName: this.fullName
         }).then( response => {
-            this.Login("afterRegister");
+            this.login("afterRegister");
         });
     }
 
-    Login(from) {
+    login(from) {
         if (!readCookie("userName")) {
             if (from == "afterRegister") {
                 var data = {
@@ -44,8 +44,12 @@ export class user {
             }).then( response => {
                 if (response.content != null) {
                     localStorage.setItem("auth_token", JSON.stringify(response.content));
-                    setCookie("userName", response.content.username, 2);
+                    setCookie("userName", response.content.user, 2);
                     document.getElementById("user_userName").innerHTML = "Logged in as: " + readCookie("userName");
+                    this.http.configure(x => {
+                        x.withBaseUrl('http://localhost:10791/');      
+                        x.withHeader('Content-Type', 'application/json');
+                        x.withHeader("Authorization", "Bearer " + response.content.token)});
                     this.router.navigateToRoute("organizations");
                 }
             });
