@@ -21,7 +21,6 @@ export class Create {
     submit() {
         var newOrganization = {
             name: this.name,
-            slug: toSlug(this.name),
             members: this.members
         };
 

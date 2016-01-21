@@ -1,19 +1,20 @@
-﻿﻿import {inject} from 'aurelia-framework';
-import {Router} from 'aurelia-router';
-import {HttpClient} from 'aurelia-http-client';
+﻿import {Router} from 'aurelia-router';
+import {OrganizationData} from './organizationData';
 
-export class dashboard {
-    constructor() {
-        this.http = new HttpClient().configure(x => {
-            x.withBaseUrl('http://localhost:10791/');      
-            x.withHeader('Content-Type', 'application/json')});
+export class Organization {
+    static inject() {
+        return [ Router, OrganizationData];
     }
 
+    constructor(router, data) {
+        this.router = router;
+        this.data = data;
+        this.userName = readCookie("userName");
+    }
 
     activate() {
-        return this.http.get("organizations/"+readCookie("userName")).then( response => {
+        this.data.getOrganizations().then( response => {
             this.organizations = response.content;
-            this.userName = readCookie("userName");
         });
     }
 }
