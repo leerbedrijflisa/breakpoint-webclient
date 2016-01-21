@@ -1,16 +1,16 @@
-﻿import {HttpClient} from 'aurelia-http-client';
+﻿import {ProjectData} from './projectData';
 
 export class project {
     static inject() {
-        return [ HttpClient ];
+        return [ProjectData ];
     }
 
-    constructor(http) {
-        this.http = http;
+    constructor(data) {
+        this.data = data;
     }
 
     activate(params) {
-        return this.http.get("projects/"+params.organization+'/'+readCookie("userName")).then( response => {
+        this.data.getProjects(params.organization).then( response => {
             this.projects = response.content;
             this.organization = params.organization; 
         });
