@@ -1,6 +1,6 @@
 ﻿<template>
     <h3>Login</h3>
-    <form submit.delegate="Login()">
+    <form submit.delegate="login()">
         <label for="userNameLogin">Username: </label>
         <input value.bind="userNameLogin" name="userNameLogin" type="text" />
         
@@ -10,7 +10,7 @@
     <hr />
 
     <h3>Register</h3>
-    <form submit.delegate="Post()">
+    <form submit.delegate="register()">
         <label for="userName">Username: </label>
         <input value.bind="userNameRegister" name="userNameRegister" type="text" />
         <br />

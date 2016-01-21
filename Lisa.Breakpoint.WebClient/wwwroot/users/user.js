@@ -4,7 +4,7 @@ import {HttpClient} from 'aurelia-http-client';
 
 export class user {
     static inject() {
-        return [ Router, HttpClient ];
+        return [Router, HttpClient];
     }
 
     constructor(router, http) {
@@ -18,15 +18,12 @@ export class user {
         }
     }
 
-    Post() {
-        var data = {
-            userName: this.userNameRegister,
-            fullName: this.fullName
-        }
-
-        this.http.post('users', data).then( response => {
+    register() {
+        this.http.post('users', {
+                userName: this.userNameRegister,
+                fullName: this.fullName
+        }).then( response => {
             this.Login("afterRegister");
-            this.router.navigateToRoute("organizations");
         });
     }
 
@@ -42,8 +39,11 @@ export class user {
                 }
             }
 
-            this.http.get('users/login/'+data.userNameLogin).then( response => {
+            this.http.get("token/", {
+                    userName: data.userNameLogin
+            }).then( response => {
                 if (response.content != null) {
+                    localStorage.setItem("allVersions", JSON.stringify(response.content));
                     setCookie("userName", response.content.username, 2);
                     document.getElementById("user_userName").innerHTML = "Logged in as: " + readCookie("userName");
                     this.router.navigateToRoute("organizations");
