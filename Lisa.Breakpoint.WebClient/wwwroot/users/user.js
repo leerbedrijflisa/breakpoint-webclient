@@ -39,11 +39,11 @@ export class user {
                 }
             }
 
-            this.http.get("token/", {
+            this.http.post("token/", {
                     userName: data.userNameLogin
             }).then( response => {
                 if (response.content != null) {
-                    localStorage.setItem("allVersions", JSON.stringify(response.content));
+                    localStorage.setItem("auth_token", JSON.stringify(response.content));
                     setCookie("userName", response.content.username, 2);
                     document.getElementById("user_userName").innerHTML = "Logged in as: " + readCookie("userName");
                     this.router.navigateToRoute("organizations");
