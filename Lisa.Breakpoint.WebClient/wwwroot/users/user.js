@@ -31,17 +31,15 @@ export class user {
         if (!readCookie("userName")) {
             if (from == "afterRegister") {
                 var data = {
-                    userNameLogin: this.userNameRegister
+                    userName: this.userNameRegister
                 }
             } else {
                 var data = {
-                    userNameLogin: this.userNameLogin
+                    userName: this.userNameLogin
                 }
             }
 
-            this.http.post("token/", {
-                    userName: data.userNameLogin
-            }).then( response => {
+            this.http.post("token/", data).then( response => {
                 if (response.content != null) {
                     localStorage.setItem("auth_token", JSON.stringify(response.content));
                     setCookie("userName", response.content.user, 2);
