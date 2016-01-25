@@ -10,7 +10,8 @@ export class project {
     }
 
     activate(params) {
-        this.data.getProjects(params.organization).then( response => {
+        this.params = params;
+        this.data.getProjects(params).then( response => {
             this.projects = response.content;
             this.organization = params.organization; 
         });

@@ -9,7 +9,7 @@ export class ProjectData {
         this.http = http;
     }
 
-    getProjects(org)   {
-        return this.http.get("projects/"+org);
+    getProjects(params)   {
+        return this.http.get("projects/"+params.organization);
     }
 }

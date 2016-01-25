@@ -20,7 +20,6 @@ export class createProject {
     create() {
         var data = {
             name: this.name,
-            projectManager: this.authToken.user,
             currentVersion: this.currentVersion,
             groups: [
                 {
@@ -42,7 +41,7 @@ export class createProject {
             members: [
                 {
                     role: 'manager',
-                    userName: readCookie("userName")
+                    userName: this.authToken.user
                 }
             ],
         };
@@ -51,5 +50,4 @@ export class createProject {
             this.router.navigateToRoute("projects", { organization: this.params.organization });
         });
     }
-
 }
