@@ -1,0 +1,19 @@
+﻿<template>
+    hoi hier komen versies doei
+
+    <!--<p repeat.for="bugreport of bugreports">${bugreport.title} - ${bugreport.version}</p>-->
+
+    <ul repeat.for="versions of bugreports">
+        <li>${versions.version}</li>
+        <ul repeat.for="report of versions.reports">
+            <li>Title: ${report.title}</li>
+            What happened?: ${report.whathappened}
+            <br /><br />
+        </ul>
+        
+    </ul>
+
+    
+   <!-- ${report.reports[$index].title}-->
+
+</template>
