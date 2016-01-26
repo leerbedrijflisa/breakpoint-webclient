@@ -1,0 +1,14 @@
+﻿<template>
+    <h3>Login</h3>
+    <form submit.delegate="login()">
+        <label for="userName">Username: </label>
+        <input value.bind="userName" name="userName" type="text" />
+        
+        <button type="submit" name="submit">log in</button>
+    </form>
+
+    <hr />
+
+    <p>Don't have an account? Shame on You... <a route-href="route: register">Sign Up!</a></p>
+
+</template>

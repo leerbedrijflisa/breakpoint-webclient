@@ -11,9 +11,9 @@ export class dashboard {
 
 
     activate() {
-        return this.http.get("organizations/"+readCookie("userName")).then( response => {
+        return this.http.get("organization").then( response => {
             this.organizations = response.content;
-            this.userName = readCookie("userName");
+            //this.userName = localStorage.getItem("loggedInUser");
         });
     }
 }

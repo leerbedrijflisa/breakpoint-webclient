@@ -15,7 +15,7 @@ export class dashboard {
         this.params = params;
         this.wontfixDisabled = true;
         this.showAssignedTo = [];
-        this.loggedUser = readCookie("userName");
+        this.loggedUser = localStorage.getItem("loggedInUser");
         var thiss = this;
 
         return Promise.all([
@@ -104,7 +104,7 @@ export class dashboard {
         filter = filter.slice(0, -1);
         value  = value.slice(0, -1);
 
-        return this.data.getFilteredReports(this.params, readCookie("userName"), filter, value).then(response => {
+        return this.data.getFilteredReports(this.params, localStorage.getItem("loggedInUser"), filter, value).then(response => {
             this.reports = response.content;
             this.reportsCount = count(this.reports);
         });

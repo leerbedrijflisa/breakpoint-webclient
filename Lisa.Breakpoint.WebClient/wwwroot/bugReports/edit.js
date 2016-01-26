@@ -13,7 +13,7 @@ export class dashboard {
 
     activate(params) {
         this.params = params;
-        this.data.getProject(params, readCookie("userName")).then(response => {
+        this.data.getProject(params, localStorage.getItem("loggedInUser")).then(response => {
             this.projMembers = response.content.members;
             this.groups = response.content.groups;
             this.browsers = response.content.browsers;

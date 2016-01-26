@@ -12,7 +12,7 @@ export class Create {
     }
     
     activate(params) {
-        this.data.getProject(params, readCookie("userName")).then(response => {
+        this.data.getProject(params, localStorage.getItem("loggedInUser")).then(response => {
             this.projMembers = response.content.members;
             this.groups = response.content.groups;
         });
@@ -23,7 +23,7 @@ export class Create {
             stepByStep: "",
             expectation: "",
             whatHappened: "",
-            reporter: readCookie("userName"),
+            reporter: localStorage.getItem("loggedInUser"),
             status: "Open",
             priority: 0,
             platform: "",

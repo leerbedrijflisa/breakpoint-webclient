@@ -16,12 +16,12 @@ export class ReportData {
 
     // Send the Params and the user
     getAllReports(params, user){
-        return this.http.get("reports/"+params.organization+"/"+params.project+"/"+readCookie("userName"));
+        return this.http.get("reports/"+params.organization+"/"+params.project+"/"+localStorage.getItem("loggedInUser"));
     }
 
     // Send the Params, filter and the user
     getFilteredReports(params, user, filter, value){
-        return this.http.get("reports/"+params.organization+"/"+params.project+"/"+readCookie("userName")+"/"+filter+"/"+value)
+        return this.http.get("reports/"+params.organization+"/"+params.project+"/"+localStorage.getItem("loggedInUser")+"/"+filter+"/"+value)
     }
 
     // Send the Params and the user
@@ -40,7 +40,7 @@ export class ReportData {
     }
     // Send the Id and the changed report
     patchReport(id, data) {
-        return this.http.patch('reports/' + id + "/" + readCookie("userName"), data);
+        return this.http.patch('reports/' + id + "/" + localStorage.getItem("loggedInUser"), data);
     }
 
     // web api faker funtions

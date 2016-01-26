@@ -13,7 +13,7 @@ export class changelog {
     }
 
     activate(params) {
-        this.loggedUser = readCookie("userName");
+        this.loggedUser = localStorage.getItem("loggedInUser");
 
         return Promise.all([
             this.data.getChangelog(params).then(response => {

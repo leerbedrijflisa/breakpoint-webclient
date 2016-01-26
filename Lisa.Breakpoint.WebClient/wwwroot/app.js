@@ -22,7 +22,8 @@ export class App {
         config.title = 'Breakpoint';
         config.addPipelineStep('authorize', AuthorizeStep);
         config.map([
-          { route: ['', 'user'],  name: 'login',   moduleId: 'users/user',   title:'User' },
+          { route: ['', 'login'],  name: 'login',   moduleId: 'users/login',   title:'Login' },
+          { route: ['register'],  name: 'register',   moduleId: 'users/register',   title:'Register' },
           { route: 'user/logout', name: 'logout',  moduleId: 'users/logout', title:'Logout' },
           { route: 'user/group',  name: 'groups',  moduleId: 'users/createGroup', title:'Create a group' },
           { route: 'user/group/:group', auth: true, name: 'group',   moduleId: 'users/group',       title:'Group' },
@@ -43,8 +44,8 @@ export class App {
 
         this.router = router;
 
-        if (readCookie("userName") != null) {
-            this.userName = "Logged in as: " + readCookie("userName");
+        if (localStorage.getItem("loggedInUser")) {
+            this.userName = localStorage.getItem("loggedInUser");
         }
     }
 }
@@ -62,7 +63,7 @@ class AuthorizeStep {
     }
  
     static isLoggedIn(): boolean {
-        var auth_token = readCookie("userName");
+        var auth_token = localStorage.getItem("loggedInUser");
         return (typeof auth_token !== "undefined" && auth_token !== null);
     }
 }

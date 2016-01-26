@@ -10,7 +10,7 @@ export class project {
     }
 
     activate(params) {
-        return this.http.get("projects/"+params.organization+'/'+readCookie("userName")).then( response => {
+        return this.http.get("projects/"+params.organization+'/'+localStorage.getItem("loggedInUser")).then( response => {
             this.projects = response.content;
             this.organization = params.organization; 
         });

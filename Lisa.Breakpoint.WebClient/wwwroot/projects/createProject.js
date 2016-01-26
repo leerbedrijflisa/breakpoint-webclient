@@ -24,7 +24,7 @@ export class createProject {
             members: [
                 {
                     role: 'manager',
-                    userName: readCookie("userName")
+                    userName: localStorage.getItem("loggedInUser")
                 }
             ],
             groups: [
@@ -41,10 +41,10 @@ export class createProject {
                     "Name": "manager"
                 }
             ],
-            projectManager: readCookie("userName")
+            projectManager: localStorage.getItem("loggedInUser")
         };
 
-        this.http.post('projects/'+readCookie("userName"), data).then( response => {
+        this.http.post('projects/'+localStorage.getItem("loggedInUser"), data).then( response => {
             this.router.navigateToRoute("projects", { organization: this.params.organization });
         });
     }

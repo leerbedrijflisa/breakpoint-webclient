@@ -12,7 +12,7 @@ export class project {
     activate(params) {
         this.params = params;
         this.canEditMember = [];
-        this.loggedInUser = readCookie("userName");
+        this.loggedInUser = localStorage.getItem("loggedInUser");
 
         return Promise.all([
             this.http.get('organizations/members/new/'+params.organization+'/'+params.project).then(response => {
@@ -25,7 +25,7 @@ export class project {
                     this.usersLeft = false;
                 }
             }),
-            this.http.get('projects/'+params.organization+'/'+params.project+'/'+readCookie("userName")).then(response => {
+            this.http.get('projects/'+params.organization+'/'+params.project+'/'+localStorage.getItem("loggedInUser")).then(response => {
                 this.members = this.filterMembers(response.content.members);
                 this.groups  = response.content.groups;
             })
@@ -37,7 +37,7 @@ export class project {
         var role = getSelectValue("newRole");
 
         var patch = {
-            sender: readCookie("userName"),
+            sender: localStorage.getItem("loggedInUser"),
             type: "add",
             member: member,
             role: role
@@ -51,9 +51,9 @@ export class project {
     removeMember(member) {
         var role = getSelectValue("role_"+member);
 
-        if (readCookie("userName") != member) {
+        if (localStorage.getItem("loggedInUser") != member) {
             var patch = {
-                sender: readCookie("userName"),
+                sender: localStorage.getItem("loggedInUser"),
                 type: "remove",
                 member: member,
                 role: role
@@ -66,11 +66,11 @@ export class project {
     }
     
     saveMember(member) {
-        if (readCookie("userName") != member) {
+        if (localStorage.getItem("loggedInUser") != member) {
             var role = getSelectValue("role_"+member);
 
             var patch = { 
-                sender: readCookie("userName"),
+                sender: localStorage.getItem("loggedInUser"),
                 type: "update",
                 member: member,
                 role: role
@@ -90,7 +90,7 @@ export class project {
             memberRoleLevel;
 
         for (i = 0; i < membersLength; i++) {
-            if (members[i].userName == readCookie("userName")) {
+            if (members[i].userName == localStorage.getItem("loggedInUser")) {
                 loggedInUserRole = members[i].role;
                 break;
             }
