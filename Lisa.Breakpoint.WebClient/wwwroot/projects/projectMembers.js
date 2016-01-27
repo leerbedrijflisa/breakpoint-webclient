@@ -12,10 +12,11 @@ export class project {
     activate(params) {
         this.params = params;
         this.canEditMember = [];
-        this.loggedInUser = readCookie("userName");
+        this.authToken = JSON.parse(localStorage.getItem("auth_token"));
+        this.loggedInUser = this.authToken.user;
 
         return Promise.all([
-            this.http.get('organizations/members/new/'+params.organization+'/'+params.project).then(response => {
+            this.http.get('organizations/members/'+params.organization).then(response => {
                 var orgMembers = response.content;
                 var orgMembersLength = count(orgMembers);
                 if (orgMembersLength > 0) {
@@ -25,7 +26,7 @@ export class project {
                     this.usersLeft = false;
                 }
             }),
-            this.http.get('projects/'+params.organization+'/'+params.project+'/'+readCookie("userName")).then(response => {
+            this.http.get('projects/'+params.organization+'/'+params.project).then(response => {
                 this.members = this.filterMembers(response.content.members);
                 this.groups  = response.content.groups;
             })
@@ -37,11 +38,14 @@ export class project {
         var role = getSelectValue("newRole");
 
         var patch = {
-            sender: readCookie("userName"),
-            type: "add",
-            member: member,
-            role: role
+            Action: "add",
+            Field: "members",
+            Value: {
+                member: member,
+                role: role
+            }
         };
+
 
         this.http.patch('projects/'+this.params.organization+'/'+this.params.project+'/members', patch).then(response => {
             window.location.reload();
@@ -49,15 +53,16 @@ export class project {
     }
 
     removeMember(member) {
-        var role = getSelectValue("role_"+member);
-
         if (readCookie("userName") != member) {
             var patch = {
-                sender: readCookie("userName"),
-                type: "remove",
-                member: member,
-                role: role
+                Action: "remove",
+                Field: "members",
+                Value: {
+                    member: member,
+                    role: role
+                }
             };
+
 
             this.http.patch('projects/'+this.params.organization+'/'+this.params.project+'/members', patch).then(response => {
                 window.location.reload();
@@ -66,14 +71,15 @@ export class project {
     }
     
     saveMember(member) {
-        if (readCookie("userName") != member) {
+        if (this.loggedInUser != member) {
             var role = getSelectValue("role_"+member);
-
-            var patch = { 
-                sender: readCookie("userName"),
-                type: "update",
-                member: member,
-                role: role
+            var patch = {
+                Action: "update",
+                Field: "members",
+                Value: {
+                    member: member,
+                    role: role
+                }
             };
 
             this.http.patch('projects/'+this.params.organization+'/'+this.params.project+'/members', patch).then(response => {
@@ -90,7 +96,7 @@ export class project {
             memberRoleLevel;
 
         for (i = 0; i < membersLength; i++) {
-            if (members[i].userName == readCookie("userName")) {
+            if (members[i].userName == this.loggedInUser) {
                 loggedInUserRole = members[i].role;
                 break;
             }

@@ -4,16 +4,16 @@
     <ul>
         <li repeat.for="member of members"  class="li-item">
             <p if.bind="!$parent.canEditMember[$index]">
-                <span>${member.userName}: </span>
+                <span>${member.username}: </span>
                 <span>${member.role}</span>
             </p>
-            <p if.bind="$parent.loggedInUser == member.userName">
-                <span>${member.userName}(jij): </span>
+            <p if.bind="$parent.loggedInUser == member.username">
+                <span>${member.username}(jij): </span>
                 <span>${member.role}</span>
             </p>
-            <p if.bind="$parent.canEditMember[$index] && $parent.loggedInUser != member.userName">
-                <span>${member.userName}</span>
-                <select id="role_${member.userName}" value.bind="member.role">
+            <p if.bind="$parent.canEditMember[$index] && $parent.loggedInUser != member.username">
+                <span>${member.username}</span>
+                <select id="role_${member.username}" value.bind="member.role">
                     <option repeat.for="group of $parent.groups"    value.bind="$parent.role.name" value="${group.name}">${group.name}</option>
                     <option repeat.for="group of $parent.disabled"  value.bind="$parent.role.name" disabled="disabled" value="${group.name}">${group.name}</option>
                 </select>
