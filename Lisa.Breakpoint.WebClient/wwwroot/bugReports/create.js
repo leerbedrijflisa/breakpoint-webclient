@@ -9,6 +9,8 @@ export class Create {
     constructor(reportData, router) {
         this.data = reportData;
         this.router = router;
+        this.oldPlatforms = JSON.parse(localStorage.getItem("allPlatforms"));
+        if(this.oldPlatforms == null) this.oldPlatforms = [ "IE8", "Firefox 9001", "Thor Browser" ];
     }
     
     activate(params) {
@@ -29,46 +31,60 @@ export class Create {
             reporter: readCookie("userName"),
             status: "Open",
             priority: 0,
-            platform: "",
+            platform: [],
             version: "",
             assignedTo: {
                 type: "",
                 value: ""
             }
         };
+        this.report.platform.push('');
     }
 
-    checkKey(event) {
+    checkKey(index, event) {
         if(event.which == 13) {
-            this.addInput(this.value);
+            this.addInput(index, event);
         }
-        return false;
     }
 
-    addInput(input) {
-        if(this.input == "") {
-            alert("You didn't put anything down"); 
-            return false;
+    addInput(index, event) {
+        this.report.platform[index] = event.target.value;
+        if (this.report.platform[this.report.platform.length-1]) {
+            event.target.value = '';
+            this.report.platform.push('');
         }
-        alert("You tried to add an input"); 
-        this.value = this.input;
-        return false;
     }
 
-    getPlatforms() {
-        var platform = new Array();
-        var platformElement = document.getElementsByClassName("platform");
-        for (var i = 0; i < platformElement.length; i++) {
-            platform.push(platformElement[i].value);
-        }
-        return platform;
+    removeInput(index) {
+        this.report.platform.splice(index, 1);
     }
 
     submit() {
-        this.report.platform = this.getPlatforms();
+        if(!document.getElementById("input0").value == "")  {
+            this.report.platform[0] = document.getElementById("input0").value;
+        }
+        if (this.oldPlatforms === null) {
+            this.oldPlatforms = [];
+        }
+        if (this.report.platform.length == 1 && this.report.platform[0] == "")   {
+            this.report.platform[0] = "not specified";
+        }
+        var difference = this.oldPlatforms
+            .filter(x => this.report.platform.indexOf(x) == -1)
+            .concat(this.report.platform.filter(x => this.oldPlatforms.indexOf(x) == -1));
+
+        for(var i=0;i<difference.length;i++){
+            if(difference[i] === "")   {
+                difference.splice(i, 1);
+            }
+        }
+
+        if (difference.length > 0) {
+            localStorage.setItem("allPlatforms", JSON.stringify(difference));
+        }
         this.report.assignedTo.type = getAssignedToType(document.getElementById("assignedTo"));;
         this.data.postReport(this.report).then(response => {
-            this.router.navigateToRoute("reports", { organization: this.report.organization, project: this.report.project });
+            window.location.reload();
         });
     }
 }

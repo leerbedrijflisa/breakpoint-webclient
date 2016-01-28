@@ -32,13 +32,16 @@
             </optgroup>
         </select>
         <br />
+
         <label>Platform: </label>
-        <div id="platform">
-            <input keyup.trigger="checkKey($event)" type="text" />
-        </div>
-
-        <br /><br />
-
+        <template repeat.for ="platform of report.platform">
+            <input list="platforms" name="platforms" value.bind="platform" keyup.trigger="$parent.checkKey($index, $event)" id="input${$index}">
+            <datalist id="platforms">
+                <option repeat.for="oldPlatform of $parent.oldPlatforms" value.bind="oldPlatform">
+            </datalist>
+            <a click.delegate="$parent.removeInput($index)" if.bind="$parent.report.platform.length > 1" class="btn" name="submit">X</a>
+            <br />
+        </template>
         <label for="version">Test version: </label>
         <input type="text" value.bind="report.version"/>
 
