@@ -6,7 +6,7 @@
         <form if.bind="canAddOption" submit.delegate="patchVersion()" ref="versionForm">
             <input list="versions" name="versions" value.bind="textVersion" id="input${$index}">
             <datalist id="versions">
-                <option repeat.for="existingVersion of existingVersions" value.bind="existingVersion">
+                <option repeat.for="version of existingVersions" value="${version}">${version}</option>
             </datalist>
             <button type="submit">Submit</button>
         </form>
@@ -65,7 +65,7 @@
                 <option value="all">All versions</option>
                 <option value="none">No versions</option>
                 <option disabled>──────────</option>
-                <option repeat.for="version of versions" value="${version}">${version}</option>
+                <option repeat.for="version of existingVersions" value="${version}">${version}</option>
             </select>
         </div>
     </div>
@@ -95,11 +95,11 @@
                     </select>
                     <button type="submit">Edit Status</button>
             </form>
-            <p><span class="label">priority:</span> ${report.priorityString}</p>
+            <p><span class="label">priority:</span> ${report.priority}</p>
             <p if.bind="$parent.showAssignedTo[$index]"><span>assigned to a </span> <span class="label">${report.assignedTo.type}</span>: ${report.assignedTo.value}</p>
-            <template  repeat.for="platform in $parent.report.platform">
+            <!--<template  repeat.for="platform in $parent.platforms">
                 <p><span class="label">Platform:</span> ${platform} </p>
-            </template>
+            </template>-->
         </li>
     </ul>
 </template>

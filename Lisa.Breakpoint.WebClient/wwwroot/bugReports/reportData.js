@@ -42,17 +42,19 @@ export class ReportData {
 
     // Send the Params and the user
     getAllReports(params, user){
-        return this.http.get("reports/"+params.organization+"/"+params.project+"/"+readCookie("userName"));
+        return this.http.get("reports/"+params.organization+"/"+params.project);
     }
 
     // Send the Params, filter and the user
-    getFilteredReports(params, user, filter, value){
-        return this.http.get("reports/"+params.organization+"/"+params.project+"/"+readCookie("userName")+"/"+filter+"/"+value);
+    getFilteredReports(params, user, filter){
+        return this.http.get("reports/"+params.organization+"/"+params.project+"?"+filter);
+
+        // {url}/reports?assignedto=developer&reporter=litsher
     }
 
     // Send the Params and the user
     getProject(params, user) {        
-        return this.http.get('projects/'+ params.organization+'/'+ params.project+'/'+user+'/true');
+        return this.http.get('projects/'+ params.organization+'/'+ params.project);
     }
 
     // Send the Params and the user
