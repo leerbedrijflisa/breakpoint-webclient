@@ -1,15 +1,16 @@
 ﻿import {Router} from 'aurelia-router';
-import {inject} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-http-client';
+import {Helpers} from '../Resources/helpers';
 
 export class user {
     static inject() {
-        return [Router, HttpClient];
+        return [Router, HttpClient, Helpers];
     }
 
-    constructor(router, http) {
+    constructor(router, http, helpers) {
         this.router = router;
         this.http = http;
+        this.helpers = helpers;
     }
 
     activate() {
@@ -38,6 +39,9 @@ export class user {
                     userName: this.userNameLogin
                 }
             }
+
+            // A simple function that capitalizes any string (only the first character so it only works with single words).
+            data.userName = this.helpers.capitalize(data.userName);
 
             this.http.post("token/", data).then( response => {
                 if (response.content != null) {
