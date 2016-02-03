@@ -11,10 +11,10 @@ export class dashboard {
         this.router = router;
         if( typeof localStorage.getItem("allVersions") == "string" || localStorage.getItem("allVersions") instanceof String)
         {
-            this.existingVersions = JSON.parse("[" + localStorage.getItem("allVersions") + "]");
+            this.existingVersions = JSON.parse("[" + localStorage.getItem("allVersions") + "]")[0];
         }
         else{
-            this.existingVersions = JSON.parse(localStorage.getItem("allVersions"));
+            this.existingVersions = JSON.parse(localStorage.getItem("allVersions"))[0];
         }
         this.platforms = JSON.parse(localStorage.getItem("allPlatforms"));
         this.authToken = JSON.parse(localStorage.getItem("auth_token"));
@@ -86,37 +86,39 @@ export class dashboard {
 
     filterReports() {
         var filters = document.getElementsByClassName('filterItem');
-        var filter = "assignedTo="+this.loggedUserRole+"&reporter="+this.loggedUser;
-        //var value = "";
+        var filter = "";
+        var value = "";
 
-        //for (var i = filters.length - 1; i >= 0; i--)
-        //{
-        //    var filterType = filters[i].id;
-        //    if (filterType == "titleFilter") {
-        //        if (filters[i].value == "") {
-        //            continue;
-        //        } else {
-        //            filter += filters[i].id+"+";
-        //            value += filters[i].value+"+";
-        //        }
-        //    } else {
-        //        filter += filters[i].id+"+";
-        //        value += getSelectValue(filterType)+"+";
-        //    }
-        //}
-        //filter = filter.slice(0, -1);
-        //value  = value.slice(0, -1);
-
-        return this.data.getFilteredReports(this.params, readCookie("userName"), filter).then(response => {
-            this.reports = response.content;
-            this.reportsCount = count(this.reports);
-        });
+        for (var i = filters.length - 1; i >= 0; i--)
+        {
+            var filterType = filters[i].id;
+                if (filterType == "title") {
+                    if (filters[i].value == "") {
+                        continue;
+                    } else {
+                        filter += filters[i].id+"="+filters[i].value+"&";
+                    }
+                }
+                else {
+                    var Selvalue = getSelectValue(filterType);
+                    if (Selvalue != "all") {
+                        filter += filters[i].id+"="+Selvalue+"&";
+                    }
+                }
+        }
+        if (filter != "")
+        {
+            filter = filter.slice(0, -1);
+            return this.data.getFilteredReports(this.params, readCookie("userName"), filter).then(response => {
+                this.reports = response.content;
+                this.reportsCount = count(this.reports);
+            });
+        }
     }
 
     patchVersion() {
         if(this.existingVersions == null) this.existingVersions = [ "The latest version", "a different version", "Legacy" ];
-            if(this.textVersion)
-            {
+            if(this.textVersion)    {
                 if(this.existingVersions.indexOf(this.textVersion) > -1)    {
                     localStorage.setItem("currentVersion", this.textVersion);
                     window.location.reload();

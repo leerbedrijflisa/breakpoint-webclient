@@ -13,13 +13,27 @@
     </section>
     <div class="filters">
         <div class="sep">
-            <label for="titleFilter" class="flabel">Title: </label>
-            <input change.delegate="filterReports()" type="text" id="titleFilter" name="titleFilter" class="filterItem smaller" />
+            <label for="title" class="flabel">Title: </label>
+            <input change.delegate="filterReports()" type="text" id="title" name="titleFilter" class="filterItem smaller" />
         </div>
 
         <div class="sep">
-            <label for="statusFilter" class="flabel">Status: </label>
-            <select change.delegate="filterReports()" id="statusFilter" name="statusFilter" class="filterItem">
+            <label for="reporter" class="flabel">Reporter: </label>
+            <select change.delegate="filterReports()" id="reporter" name="reporterFilter" class="filterItem">
+                <option value="all">All reporters</option>
+                <option disabled>──────────</option>
+                <option repeat.for="member of members" value="${member.username}">${member.username}</option>
+            </select>
+        </div>
+
+        <!--<div class="sep">
+            <label for="reported" class="flabel">Reported: </label>
+            <input change.delegate="filterReports()" type="text" id="reported" name="reportedFilter" disabled="disabled" class="filterItem smaller" />
+        </div>-->
+
+        <div class="sep">
+            <label for="status" class="flabel">Status: </label>
+            <select change.delegate="filterReports()" id="status" name="statusFilter" class="filterItem">
                 <option value="all" selected="selected">All statuses</option>
                 <option disabled>──────────</option>
                 <option value="Open">Open</option>
@@ -31,31 +45,13 @@
         </div>
 
         <div class="sep">
-            <label for="reporterFilter" class="flabel">Reporter: </label>
-            <select change.delegate="filterReports()" id="reporterFilter" name="reporterFilter" class="filterItem">
-                <option value="all">All reporters</option>
-                <option disabled>──────────</option>
-                <option repeat.for="member of members" value="${member.userName}">${member.userName}</option>
-            </select>
-        </div>
-
-        <div class="sep">
-            <label for="memberFilter" class="flabel">Member: </label>
-            <select change.delegate="filterReports()" id="memberFilter" name="memberFilter" class="filterItem" value.bind="loggedUser">
-                <option value="all">All members</option>
-                <option value="none">No members</option>
-                <option disabled>──────────</option>
-                <option repeat.for="member of members" value="${member.userName}">${member.userName}</option>
-            </select>
-        </div>
-
-        <div class="sep">
-            <label for="groupFilter" class="flabel">Group: </label>
-            <select change.delegate="filterReports()" id="groupFilter" name="groupFilter" class="filterItem" value.bind="loggedUserRole">
-                <option value="all">All groups</option>
-                <option value="none">No groups</option>
+            <label for="assignedTo" class="flabel">assigned: </label>
+            <select change.delegate="filterReports()" id="assignedTo" name="assignedFilter" class="filterItem" value.bind="loggedUser">
+                <option value="all">All members or groups</option>
                 <option disabled>──────────</option>
                 <option repeat.for="group of groups" value="${group.name}">${group.name}</option>
+                <option disabled>──────────</option>
+                <option repeat.for="member of members" value="${member.username}">${member.username}</option>
             </select>
         </div>
 
