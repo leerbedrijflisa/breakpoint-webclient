@@ -13,7 +13,7 @@ export class dashboard {
         {
             this.existingVersions = JSON.parse("[" + localStorage.getItem("allVersions") + "]");
         }
-        else {
+        else{
             this.existingVersions = JSON.parse(localStorage.getItem("allVersions"));
         }
         this.platforms = JSON.parse(localStorage.getItem("allPlatforms"));
