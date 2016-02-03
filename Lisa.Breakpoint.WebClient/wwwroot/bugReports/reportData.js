@@ -63,8 +63,8 @@ export class ReportData {
     }
 
     // Send the full report 
-    postReport(report) {
-        return this.http.post('reports/'+report.organization+'/'+report.project, JSON.stringify(report));
+    postReport(params, report) {
+        return this.http.post('reports/'+params.organization+'/'+params.project, report);
     }
     // Send the Id and the changed report
     patchReport(id, data) {
