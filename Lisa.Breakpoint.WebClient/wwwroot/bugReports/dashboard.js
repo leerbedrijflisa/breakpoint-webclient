@@ -121,13 +121,11 @@ export class dashboard {
             if(this.textVersion)    {
                 if(this.existingVersions.indexOf(this.textVersion) > -1)    {
                     localStorage.setItem("currentVersion", this.textVersion);
-                    window.location.reload();
                 }
                 else {
                     this.existingVersions.push(this.textVersion);
                     localStorage.setItem("allVersions", JSON.stringify(this.existingVersions));
                     localStorage.setItem("currentVersion", this.textVersion);
-                    window.location.reload();
                 }
             }
         }
