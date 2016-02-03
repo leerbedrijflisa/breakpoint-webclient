@@ -1,21 +1,26 @@
 ﻿import {ReportData} from './reportData';
+import {LocalStoragePatcher} from '../Resources/localStoragePatcher';
 import {Router} from "aurelia-router";
 
 export class Create {
     static inject() {
-        return [ReportData, Router ];
+        return [ReportData, LocalStoragePatcher,Router ];
     }
 
-    constructor(reportData, router) {
+    constructor(reportData, localStoragePatcher, router) {
         this.data = reportData;
+        this.patcher = localStoragePatcher;
         this.router = router;
         this.oldPlatforms = JSON.parse(localStorage.getItem("allPlatforms"));
+        this.oldVersions = JSON.parse(localStorage.getItem("allVersions"));
         if(this.oldPlatforms == null) this.oldPlatforms = [ "IE8", "Firefox 9001", "Thor Browser" ];
+        this.authToken = JSON.parse(localStorage.getItem("auth_token"));
+        this.loggedUser = this.authToken.user;
     }
     
     activate(params) {
         this.params = params;
-        this.data.getProject(params, readCookie("userName")).then(response => {
+        this.data.getProject(params, this.loggedUser).then(response => {
             this.projMembers = response.content.members;
             this.groups = response.content.groups;
         }),
@@ -24,22 +29,20 @@ export class Create {
         })
         this.report = {
             title: "",
-            project: params.project,
-            organization: params.organization,
             stepByStep: "",
             expectation: "",
             whatHappened: "",
-            reporter: readCookie("userName"),
-            status: "Open",
-            priority: 0,
-            platform: [],
+            reporter: this.loggedUser,
+            status: "open",
+            priority: "",
             version: "",
             assignedTo: {
                 type: "",
                 value: ""
-            }
+            },
+            platforms: []
         };
-        this.report.platform.push('');
+        this.report.platforms.push('');
     }
 
     checkKey(index, event) {
@@ -49,43 +52,25 @@ export class Create {
     }
 
     addInput(index, event) {
-        this.report.platform[index] = event.target.value;
-        if (this.report.platform[this.report.platform.length-1]) {
-            this.report.platform.push('');
+        this.report.platforms[index] = event.target.value;
+        if (this.report.platforms[this.report.platforms.length-1]) {
+            this.report.platforms.push('');
         }
     }
 
     removeInput(index) {
-        this.report.platform.splice(index, 1);
+        this.report.platforms.splice(index, 1);
     }
 
     submit(params) {
-        var thiss = this;
-        if (this.oldPlatforms === null) {
-            this.oldPlatforms = [];
-        }
-        if (this.report.platform.length == 1 && this.report.platform[0] == "")   {
-            this.report.platform[0] = "not specified";
-        }
-
-        var uniqueNewPlatforms = this.report.platform.filter(function(obj) {
-            return !thiss.oldPlatforms.some(function(obj2) {
-                return obj == obj2;
-            });
-        });
-
-        var allPlatforms = this.oldPlatforms.concat(uniqueNewPlatforms);
-        for(var i=0;i<allPlatforms.length;i++){
-            if(allPlatforms[i] === "")   {
-                allPlatforms.splice(i, 1);
-            }
-        }
-
-        if (allPlatforms.length > 0) {
-            localStorage.setItem("allPlatforms", JSON.stringify(allPlatforms));
-        }
-        this.report.assignedTo.type = getAssignedToType(document.getElementById("assignedTo"));;
-        this.data.postReport(this.report).then(response => {
+        // For use of the patcher, give the Old data, New Data and the Local storage key.
+        this.patcher.localStoragePatcher(this.oldPlatforms, this.report.platforms, "allPlatforms");
+        this.patcher.localStoragePatcher(this.oldVersions, this.report.version, "allVersions");
+        this.report.assignedTo.type = getAssignedToType(document.getElementById("assignedTo"));
+        if (this.report.priority == "") {
+            this.report.priority = "immediately"; 
+        };
+        this.data.postReport(this.params, this.report).then(response => {
             this.router.navigateToRoute("reports", { organization: this.params.organization, project: this.params.project });
         });
     }

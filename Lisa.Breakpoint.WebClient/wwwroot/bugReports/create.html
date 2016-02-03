@@ -15,10 +15,10 @@
         <br />
         <label for="priority">Priority: </label>
         <select value.bind="report.priority" id="priority" name="priority" type="text">
-            <option selected value="0">Fix immediately</option>
-            <option value="1">Fix before release</option>
-            <option value="2">Fix for next release</option>
-            <option value="3">Fix whenever</option>
+            <option selected value="immediately">Fix immediately</option>
+            <option value="beforerelease">Fix before release</option>
+            <option value="nextrelease">Fix for next release</option>
+            <option value="fixwhenever">Fix whenever</option>
         </select>
         <br />
         <label for="assignedto">Assigned to: </label>
@@ -34,12 +34,12 @@
         <br />
 
         <label>Platform: </label>
-        <template repeat.for ="platform of report.platform">
-            <input list="platforms" name="platforms" value.bind="$parent.report.platform[$index]" keyup.trigger="$parent.checkKey($index, $event)" id="input${$index}">
+        <template repeat.for ="platform of report.platforms">
+            <input list="platforms" name="platforms" value.bind="$parent.report.platforms[$index]" keyup.trigger="$parent.checkKey($index, $event)" id="input${$index}">
             <datalist id="platforms">
                 <option repeat.for="oldPlatform of $parent.oldPlatforms" value.bind="oldPlatform">
             </datalist>
-            <a click.delegate="$parent.removeInput($index)" if.bind="$parent.report.platform.length > 1" class="btn" name="submit">X</a>
+            <a click.delegate="$parent.removeInput($index)" if.bind="$parent.report.platforms.length > 1" class="btn" name="submit">X</a>
             <br />
         </template>
         <label for="version">Test version: </label>
