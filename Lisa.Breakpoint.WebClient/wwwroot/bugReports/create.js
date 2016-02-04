@@ -12,7 +12,7 @@ export class Create {
         this.patcher = localStoragePatcher;
         this.router = router;
         this.oldPlatforms = JSON.parse(localStorage.getItem("allPlatforms"));
-        this.oldVersions = JSON.parse(localStorage.getItem("allVersions"))[0];
+        this.oldVersions = JSON.parse(localStorage.getItem("allVersions"));
         if(this.oldPlatforms == null) this.oldPlatforms = [ "IE8", "Firefox 9001", "Thor Browser" ];
         this.authToken = JSON.parse(localStorage.getItem("auth_token"));
         this.loggedUser = this.authToken.user;

@@ -4,15 +4,19 @@
         <label for="title">Title: </label>
         <input value.bind="report.title" name="title" type="text" />
         <br />
+
         <label for="stepbystep">Step By Step: </label>
         <textarea value.bind="report.stepByStep" name="stepbystep" type="text"></textarea>
         <br />
+
         <label for="expectation">Expectation: </label>
         <textarea value.bind="report.expectation" name="expectation" type="text"></textarea>
         <br />
+
         <label for="whathappened">What happened: </label>
         <textarea value.bind="report.whatHappened" name="whathappened" type="text"></textarea>
         <br />
+
         <label for="priority">Priority: </label>
         <select value.bind="report.priority" id="priority" name="priority" type="text">
             <option selected value="immediately">Fix immediately</option>
@@ -21,31 +25,32 @@
             <option value="fixwhenever">Fix whenever</option>
         </select>
         <br />
-        <label for="assignedto">Assigned to: </label>
 
+        <label for="assignedto">Assigned to: </label>
         <select id="assignedTo" value.bind="report.assignedTo.value" name="assignedtoperson" type="text">
             <optgroup label="Groups">
                 <option repeat.for="group of groups" value="${group.name}">${group.name}</option>
             </optgroup>
             <optgroup label="Members">
-                <option repeat.for="projMember of projMembers" value="${projMember.userName}">${projMember.userName}</option>
+                <option repeat.for="projMember of projMembers" value="${projMember.username}">${projMember.username}</option>
             </optgroup>
         </select>
         <br />
-
-        <label>Platform: </label>
-        <template repeat.for ="platform of report.platforms">
-            <input list="platforms" name="platforms" value.bind="$parent.report.platforms[$index]" keyup.trigger="$parent.checkKey($index, $event)" id="input${$index}">
-            <datalist id="platforms">
-                <option repeat.for="oldPlatform of $parent.oldPlatforms" value.bind="oldPlatform">
-            </datalist>
-            <a click.delegate="$parent.removeInput($index)" if.bind="$parent.report.platforms.length > 1" class="btn" name="submit">X</a>
-            <br />
-        </template>
+        <div tooltip="Hit enter to get an extra input, must have entered a value at the first one to make it work">
+            <label>Platform: </label>
+            <template repeat.for="platform of report.platforms">
+                <input list="platforms" name="platforms" value.bind="$parent.report.platforms[$index]" keyup.trigger="$parent.checkKey($index, $event)" id="input${$index}">
+                <datalist id="platforms">
+                    <option repeat.for="oldPlatform of $parent.oldPlatforms" value.bind="oldPlatform">
+                </datalist>
+                <a click.delegate="$parent.removeInput($index)" if.bind="$parent.report.platforms.length > 1" class="btn" name="submit">X</a>
+                <br />
+            </template>
+        </div>
         <label for="version">Test version: </label>
         <input type="text" value.bind="report.version"/>
-
         <br />
+
         <a click.delegate="submit()" href="" class="btn" name="submit">Report bug</a>
     </form>
 </template>
