@@ -9,47 +9,25 @@ export class changelog {
     constructor(reportData, router) {
         this.data = reportData;
         this.router = router;
-        //this.bugreports = [];
     }
 
     activate(params) {
-        this.loggedUser = readCookie("userName");
+        this.authToken = JSON.parse(localStorage.getItem("auth_token"));
+        this.loggedUser = this.authToken.user;
 
         return Promise.all([
             this.data.getChangelog(params).then(response => {
                 this.bugreports = response.content;
-
-                //console.log(this.bugreports)
-
-                // console.log(this.bugreports.version)
-
-                var i = 0
-
-
+                var i = 0;
                 this.bugreports.forEach(function(versions){
-                    console.log(i + " " + versions.version)
-
-                    //this.version = 
-
                     versions.reports.forEach(function(report){
                         console.log(report.title)
                         console.log(report.whathappened)
 
-                    })
-
-
-                    i++
+                    });
+                i++;
                 })
-
-
-
-            })
-
+                })
         ])
-
-
-         
-
     }
-
 }
