@@ -46,7 +46,7 @@ export class ReportData {
     }
 
     // Send the Params, filter and the user
-    getFilteredReports(params, user, filter){
+    getFilteredReports(params, filter){
         return this.http.get("reports/"+params.organization+"/"+params.project+"?"+filter);
 
         // {url}/reports?assignedto=developer&reporter=litsher

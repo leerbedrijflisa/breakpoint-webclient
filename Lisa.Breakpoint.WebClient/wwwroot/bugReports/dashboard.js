@@ -109,7 +109,7 @@ export class dashboard {
         if (filter != "")
         {
             filter = filter.slice(0, -1);
-            return this.data.getFilteredReports(this.params, readCookie("userName"), filter).then(response => {
+            return this.data.getFilteredReports(this.params, filter).then(response => {
                 this.reports = response.content;
                 this.reportsCount = count(this.reports);
             });
