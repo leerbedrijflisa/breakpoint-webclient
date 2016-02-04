@@ -73,3 +73,27 @@ select#selectperson {
     border-bottom: 1px solid #333333;
     border-left: 1px solid #CCCCCC;
 }
+
+[tooltip]:before {
+    /* needed - do not touch */
+    content: attr(tooltip);
+    position: absolute;
+    opacity: 0;
+    
+    /* customizable */
+    transition: all 0.15s ease;
+    padding: 10px;
+    color: #333;
+    border-radius: 10px;
+    box-shadow: 2px 2px 1px silver;    
+}
+
+[tooltip]:hover:before {
+    /* needed - do not touch */
+    opacity: 1;
+    
+    /* customizable */
+    background: #a1a1a1;
+    margin-top: -50px;
+    margin-left: 20px;    
+}
