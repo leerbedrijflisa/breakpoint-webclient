@@ -13,7 +13,7 @@
     </section>
     <a route-href="route: changelog; params.bind: { organization: params.organization, project: params.project }">Changelog</a>
     <div class="filters">
-        <div class="sep">
+        <div tooltip="Hit enter to send the title as search value!" class="sep">
             <label for="title" class="flabel">Title: </label>
             <input change.delegate="filterReports()" type="text" id="title" name="titleFilter" class="filterItem smaller" />
         </div>
@@ -37,11 +37,11 @@
             <select change.delegate="filterReports()" id="status" name="statusFilter" class="filterItem">
                 <option value="all" selected="selected">All statuses</option>
                 <option disabled>──────────</option>
-                <option value="Open">Open</option>
-                <option value="Fixed">Fixed</option>
-                <option value="Won't Fix">Won't Fix</option>
-                <option value="Won't Fix (Approved)">Won't Fix (Approved)</option>
-                <option value="Closed">Closed</option>
+                <option value="open">Open</option>
+                <option value="fixed">Fixed</option>
+                <option value="wontFix">Won't Fix</option>
+                <option value="wontFixApproved">Won't Fix (Approved)</option>
+                <option value="closed">Closed</option>
             </select>
         </div>
 
@@ -58,7 +58,7 @@
 
         <div class="sep">
             <label for="versionFilter" class="flabel">Version: </label>
-            <select change.delegate="filterReports()" id="versionFilter" name="versionFilter" class="filterItem">
+            <select change.delegate="filterReports()" id="version" name="versionFilter" class="filterItem">
                 <option value="all">All versions</option>
                 <option value="none">No versions</option>
                 <option disabled>──────────</option>
@@ -94,9 +94,9 @@
             </form>
             <p><span class="label">priority:</span> ${report.priority}</p>
             <p if.bind="$parent.showAssignedTo[$index]"><span>assigned to a </span> <span class="label">${report.assignedTo.type}</span>: ${report.assignedTo.value}</p>
-            <!--<template  repeat.for="platform in $parent.platforms">
+            <template  repeat.for="platform in $parent.platforms">
                 <p><span class="label">Platform:</span> ${platform} </p>
-            </template>-->
+            </template>
         </li>
     </ul>
 </template>

@@ -71,6 +71,7 @@ export class dashboard {
         ]);
     }
 
+    // shows or hide the assigned to if the assignedto is empty (I believe as everything is required by the api this became irrelevant).
     showAssigned(reports) {
         var reportsLength = count(reports);
         var i;
@@ -101,7 +102,10 @@ export class dashboard {
                 }
                 else {
                     var Selvalue = getSelectValue(filterType);
-                    if (Selvalue != "all") {
+                    // I'll admit this is a bit hacky, it shows the filters assigned to all the groups.. yeah, call it a hotfix it works dammit!
+                    if (filterType == "assignedTo" && Selvalue == "all") {
+                        filter += filters[i].id+"="+"tester,developer,manager&";
+                    } else if (Selvalue != "all") {
                         filter += filters[i].id+"="+Selvalue+"&";
                     }
                 }
@@ -130,6 +134,7 @@ export class dashboard {
             }
         }
 
+    // same deal as before in the code, patching is broken so this didn't work at the time of writing this.
     patchStatus(id, index) {
         if (this.reports[index].status == null) {
             this.reports[index].status = document.getElementById("status"+id).options[0].value; 
