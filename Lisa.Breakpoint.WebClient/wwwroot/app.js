@@ -58,7 +58,7 @@ class AuthorizeStep {
     }
  
     static isLoggedIn(): boolean {
-        var auth_token = readCookie("userName");
+        var auth_token = JSON.parse(localStorage.getItem("auth_token")).user;
         return (typeof auth_token !== "undefined" && auth_token !== null);
     }
 }
