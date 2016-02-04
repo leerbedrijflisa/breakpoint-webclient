@@ -19,6 +19,13 @@ export class project {
             this.http.get('organizations/members/'+params.organization).then(response => {
                 var orgMembers = response.content;
                 var orgMembersLength = count(orgMembers);
+                // Remove yourself from the organization members so you can't add yourself again.
+                for (var i = 0; i < orgMembersLength; i++) {
+                    if (orgMembers[i] == this.loggedInUser) {
+                        orgMembers.splice(i, 1);
+                        orgMembersLength = count(orgMembers);
+                    }
+                }
                 if (orgMembersLength > 0) {
                     this.usersLeft = true;
                     this.orgMembers = orgMembers;
@@ -32,39 +39,35 @@ export class project {
             })
         ]);
     }
-
+    //  This functions doesn't really work anymore because of the terrible documentation.. 
     addMember(member) {
         var member = getSelectValue("newMember");
         var role = getSelectValue("newRole");
-
         var patch = {
             Action: "add",
-            Field: "members",
+            Field: "Members",
             Value: {
-                member: member,
-                role: role
+                Username: member,
+                Role: role
             }
         };
-
-
-        this.http.patch('projects/'+this.params.organization+'/'+this.params.project+'/members', patch).then(response => {
+        this.http.patch('projects/'+this.params.organization+'/'+this.params.project, patch).then(response => {
             window.location.reload();
         });
     }
 
     removeMember(member) {
-        if (readCookie("userName") != member) {
+        if (this.loggedInUser != member) {
             var patch = {
                 Action: "remove",
                 Field: "members",
                 Value: {
-                    member: member,
-                    role: role
+                    UserName: member,
+                    Role: role
                 }
             };
-
-
-            this.http.patch('projects/'+this.params.organization+'/'+this.params.project+'/members', patch).then(response => {
+            // Using post here as the documentation for patch is terrible, TERRIBLE!
+            this.http.patch('projects/'+this.params.organization+'/'+this.params.project, patch).then(response => {
                 window.location.reload();
             });
         }
@@ -77,12 +80,12 @@ export class project {
                 Action: "update",
                 Field: "members",
                 Value: {
-                    member: member,
-                    role: role
+                    UserName: member,
+                    Role: role
                 }
             };
-
-            this.http.patch('projects/'+this.params.organization+'/'+this.params.project+'/members', patch).then(response => {
+            // Using post here as the documentation for patch is terrible, TERRIBLE!
+            this.http.patch('projects/'+this.params.organization+'/'+this.params.project, patch).then(response => {
                 window.location.reload();
             });
         }
@@ -96,7 +99,7 @@ export class project {
             memberRoleLevel;
 
         for (i = 0; i < membersLength; i++) {
-            if (members[i].userName == this.loggedInUser) {
+            if (members[i].username == this.loggedInUser) {
                 loggedInUserRole = members[i].role;
                 break;
             }

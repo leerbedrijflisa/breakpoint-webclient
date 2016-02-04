@@ -43,8 +43,8 @@ export class dashboard {
                 if (this.loggedUserRole === "manager" || this.loggedUserRole ===  "developer" ) {
                     this.canAddOption = true;
                 }
+                // The default filter when loading the page
                 this.firstFilter = "assignedTo="+this.loggedUserRole+"&reporter="+this.loggedUser;
-
                 this.data.getFilteredReports(params, this.loggedUser, this.firstFilter).then( response => {
                     this.reports = this.showAssigned(response.content);
                     this.reportsCount = count(this.reports);
