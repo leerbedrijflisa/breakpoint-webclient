@@ -15,7 +15,7 @@ export class user {
 
     activate() {
         if (readCookie("userName")) {
-            this.router.navigateToRoute("organizations");
+            this.router.navigateToRoute("organization");
         }
     }
 
@@ -52,7 +52,7 @@ export class user {
                         x.withBaseUrl('http://localhost:10791/');      
                         x.withHeader('Content-Type', 'application/json');
                         x.withHeader("Authorization", "Bearer " + response.content.token)});
-                    this.router.navigateToRoute("organizations");
+                    this.router.navigateToRoute("organization");
                 }
             });
         }

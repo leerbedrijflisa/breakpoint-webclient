@@ -25,7 +25,7 @@ export class Create {
         };
 
         this.data.postOrganisation(newOrganization).then(response => {
-            this.router.navigateToRoute("organizations");
+            this.router.navigateToRoute("organization");
         });
     }
 }

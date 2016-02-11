@@ -23,7 +23,7 @@ export class App {
           { route: 'user/group',  name: 'groups',  moduleId: 'users/createGroup', title:'Create a group' },
           { route: 'user/group/:group', auth: true, name: 'group',   moduleId: 'users/group',       title:'Group' },
 
-          { route: 'organization',          auth: true, name: 'organizations',          moduleId: 'organizations/organization',         title:'Organizations' },
+          { route: 'organization',          auth: true, name: 'organization',          moduleId: 'organizations/organization',         title:'Organizations' },
           { route: 'organization/create',   auth: true, name: 'create-organization',    moduleId: 'organizations/createOrganization',    title:'New organization' },
 
           { route: ':organization',         auth: true, name: 'projects',        moduleId: 'projects/project',        title:'Projects' },
