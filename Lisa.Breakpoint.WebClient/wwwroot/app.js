@@ -11,6 +11,10 @@ export class App {
         http.configure(x => {
             x.withBaseUrl('http://localhost:10791/');
             x.withHeader('Content-Type', 'application/json');
+            if(localStorage.getItem("auth_token") != null){
+                this.auth_token = JSON.parse(localStorage.getItem("auth_token"))
+                x.withHeader('Authorization', 'Bearer ' + this.auth_token['token']);
+            }
         });
     }
 
