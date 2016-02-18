@@ -14,7 +14,7 @@ export class user {
     }
 
     activate() {
-        if (readCookie("userName")) {
+        if (localStorage.getItem("auth_token")) {
             this.router.navigateToRoute("organization");
         }
     }
@@ -29,7 +29,7 @@ export class user {
     }
 
     login(from) {
-        if (!readCookie("userName")) {
+        if (!localStorage.getItem("auth_token")) {
             if (from == "afterRegister") {
                 var data = {
                     userName: this.userNameRegister
@@ -41,13 +41,12 @@ export class user {
             }
 
             // A simple function that capitalizes any string (only the first character so it only works with single words).
-            data.userName = this.helpers.capitalize(data.userName);
+            //data.userName = this.helpers.capitalize(data.userName);
 
             this.http.post("token/", data).then( response => {
                 if (response.content != null) {
                     localStorage.setItem("auth_token", JSON.stringify(response.content));
-                    setCookie("userName", response.content.user, 2);
-                    document.getElementById("user_userName").innerHTML = "Logged in as: " + readCookie("userName");
+                    document.getElementById("user_userName").innerHTML = "Logged in as: " + JSON.parse(localStorage.getItem("auth_token"))['user'];
                     this.http.configure(x => {
                         x.withBaseUrl('http://localhost:10791/');      
                         x.withHeader('Content-Type', 'application/json');

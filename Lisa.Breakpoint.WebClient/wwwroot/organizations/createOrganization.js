@@ -14,6 +14,7 @@ export class Create {
     activate() {
         //Gets the users from the Api
         this.data.getUsers().then(response => {
+            console.log(JSON.parse(response.content))
             this.users = response.content;
         });
     }

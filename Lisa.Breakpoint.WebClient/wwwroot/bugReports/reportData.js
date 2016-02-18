@@ -68,36 +68,8 @@ export class ReportData {
     }
     // Send the Id and the changed report
     patchReport(id, data) {
-        return this.http.patch('reports/' + id + "/" + readCookie("userName"), data);
+        return this.http.patch('reports/' + id + "/" + JSON.parse(localStorage.getItem("auth_token"))['user'], data);
     }
-
-    // web api faker funtions
-
-    // Send changlog as a list of all bugreports per version in the selected project
-    //getChangelog() {
-    //    return this.changelog = [{
-    //                version: "v2",
-    //                reports: [{
-    //                    title: "Style dingen",
-    //                    description: "Ja uber coole style"
-    //                },
-    //                {
-    //                    title: "Dingen met snelheid",
-    //                    description: "1.21 GIGAWATTS?!?"
-    //                }]
-    //            },
-	//        {
-	//            version: "v1",
-	//            reports: [{
-	//                title: "Kinderziektes opgelost",
-	//                description: "Struggles...."
-	//            },
-	//	        {
-	//	            title: "Link naar pagina",
-	//	            description: "Nu werkt het"
-	//	        }]
-	//        }];
-    //}
 
     getChangelog() {
         return new Promise (function(resolve, reject) {

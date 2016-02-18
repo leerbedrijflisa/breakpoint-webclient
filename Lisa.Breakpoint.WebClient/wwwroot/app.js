@@ -12,8 +12,7 @@ export class App {
             x.withBaseUrl('http://localhost:10791/');
             x.withHeader('Content-Type', 'application/json');
             if(localStorage.getItem("auth_token") != null){
-                this.auth_token = JSON.parse(localStorage.getItem("auth_token"))
-                x.withHeader('Authorization', 'Bearer ' + this.auth_token['token']);
+                x.withHeader('Authorization', 'Bearer ' + JSON.parse(localStorage.getItem("auth_token"))['token']);
             }
         });
     }
@@ -43,9 +42,9 @@ export class App {
 
         this.router = router;
 
-        if (readCookie("userName") != null) {
-            this.userName = "Logged in as: " + readCookie("userName");
-        }
+        //if (localStorage.getItem("auth_token") != null) {
+        //    this.userName = "Logged in as: " + JSON.parse(localStorage.getItem("auth_token"))['user'];
+        //}
     }
 }
 

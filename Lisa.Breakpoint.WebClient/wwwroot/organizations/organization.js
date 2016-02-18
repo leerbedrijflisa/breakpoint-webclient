@@ -9,7 +9,6 @@ export class Organization {
     constructor(router, data) {
         this.router = router;
         this.data = data;
-        this.userName = readCookie("userName");
     }
 
     activate() {

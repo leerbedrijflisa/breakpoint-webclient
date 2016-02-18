@@ -7,7 +7,7 @@
         <label for="members">Members: </label>
         <select multiple id="membersSelect" value.bind="members" name="members" type="text">
             <option value="">-</option>
-            <option repeat.for="user of users" value="${user.username}">${user.username}</option>
+            <option repeat.for="user of users" value="${users.userName}">${users.userName}</option>
         </select>
         <br />
         <button type="submit" name="submit">Create organization</button>
